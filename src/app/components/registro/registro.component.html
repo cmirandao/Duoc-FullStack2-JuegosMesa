@@ -1,0 +1,93 @@
+<div class="principal d-flex align-items-center justify-content-center">
+    <div class="registro-contenedor" style="width: 100%; max-width: 700px;">
+        <header class="encabezado" id="inicio">
+            <div class="contenedor encabezado-contenido">
+                <h1>SEV Toys</h1>
+                <h2 class="fs-4">Crear una Cuenta</h2>
+                <p class="subtitulo">Regístrate para obtener recompensas y llevar un registro de tus juegos favoritos.
+                </p>
+            </div>
+        </header>
+
+        <form class="registro-contenedor" [formGroup]="registroForm" (ngSubmit)="onSubmit()" novalidate>
+            <div class="row mb-3">
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Nombre Completo *</label>
+                    <input formControlName="nombre" class="form-control"
+                        [class.is-invalid]="registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched">
+                </div>
+                <div class="col-12 col-md-6 mt-3 mt-md-0">
+                    <label class="form-label">Nombre de Usuario *</label>
+                    <input formControlName="usuario" class="form-control"
+                        [class.is-invalid]="registroForm.get('usuario')?.invalid && registroForm.get('usuario')?.touched">
+                </div>
+
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Correo Electrónico *</label>
+                <input type="email" formControlName="email" class="form-control"
+                    [class.is-invalid]="registroForm.get('email')?.invalid && registroForm.get('email')?.touched">
+                @if (registroForm.get('email')?.errors?.['pattern']) {
+                <small class="text-danger">Ingresa un correo electrónico válido (ejemplo@dominio.com).</small>
+                }
+            </div>
+            <div class="row mb-3">
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Contraseña *</label>
+                    <input type="password" formControlName="password" class="form-control"
+                        [class.is-invalid]="registroForm.get('password')?.invalid && registroForm.get('password')?.touched">
+                    @if (registroForm.get('password')?.errors?.['pattern']) {
+                    <small class="text-danger">Debe tener 8-20 carac, 1 mayús, 1 número, 1 especial.</small>
+                    }
+                </div>
+                <div class="col-12 col-md-6 mt-3 mt-md-0">
+                    <label class="form-label">Repetir Contraseña *</label>
+                    <input type="password" formControlName="confirmPassword" class="form-control"
+                        [class.is-invalid]="registroForm.get('confirmPassword')?.invalid && registroForm.get('confirmPassword')?.touched">
+                    @if (registroForm.errors?.['noCoincide'] && registroForm.get('confirmPassword')?.touched) {
+                    <small class="text-danger">Las contraseñas no coinciden.</small>
+                    }
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Fecha de Nacimiento *</label>
+                    <input type="date" formControlName="fechaNacimiento" class="form-control"
+                        [class.is-invalid]="registroForm.get('fechaNacimiento')?.invalid && registroForm.get('fechaNacimiento')?.touched">
+                    @if (registroForm.get('fechaNacimiento')?.errors?.['menorEdad'] &&
+                    registroForm.get('fechaNacimiento')?.touched) {
+                    <small class="text-danger">Debes tener al menos 13 años.</small>
+                    }
+                    @if (registroForm.get('fechaNacimiento')?.errors?.['required'] &&
+                    registroForm.get('fechaNacimiento')?.touched) {
+                    <small class="text-danger">La fecha es obligatoria.</small>
+                    }
+                </div>
+                <div class="col-12 col-md-6 mt-3 mt-md-0">
+                    <label class="form-label">Dirección de Despacho (Opcional)</label>
+                    <input formControlName="direccion" class="form-control" placeholder="Ej: Av. Las Condes 1234"
+                        [class.is-invalid]="registroForm.get('direccion')?.invalid && registroForm.get('direccion')?.touched">
+                </div>
+            </div>
+
+            <!-- Acciones del formulario -->
+            <div class="d-flex justify-content-center gap-3 mt-4">
+                <button type="submit" [disabled]="registroForm.invalid" class="btn-enviar px-4">Registrarse</button>
+                <button (click)="onReset()" class="btn-limpiar px-4" id="btnLimpiar">Limpiar</button>
+            </div>
+
+            <div class="text-center mt-4 border-top pt-3">
+                <span class="text-muted">¿Ya tienes una cuenta? </span>
+                <a routerLink="/login"
+                    style="color: var(--color-principal); font-weight: bold; text-decoration: none;">Inicia sesión
+                    aquí</a>
+            </div>
+            <!-- Enlace de retorno -->
+            <div class="text-center mt-3">
+                <a routerLink="/catalogo" class="text-muted" style="text-decoration: none;"><span
+                        class="material-symbols-outlined align-middle fs-6">arrow_back</span> Volver a la tienda</a>
+            </div>
+
+        </form>
+    </div>
+</div>

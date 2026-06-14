@@ -1,0 +1,134 @@
+<main class="container py-4 flex-grow-1">
+
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+    <h2>Panel de Control</h2>
+    <p class="text-muted mb-0">Bienvenido, <strong>{{ authService.usuarioActual()?.nombre }}</strong></p>
+  </div>
+
+  <div class="row g-4 mb-5">
+    <div class="col-12 col-md-4">
+      <div class="tarjeta tarjeta-stat p-3 d-flex align-items-center justify-content-between">
+        <div class="text-center w-100">
+          <p class="text-muted mb-1 small text-uppercase fw-bold">Ventas del mes anterior</p>
+          <h3 class="mb-0 fs-2">$450.000</h3>
+        </div>
+        <span class="material-symbols-outlined fs-1">payments</span>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="tarjeta tarjeta-stat borde-exito p-3 d-flex align-items-center justify-content-between">
+        <div class="text-center w-100">
+          <p class="text-muted mb-1 small text-uppercase fw-bold">Usuarios Registrados</p>
+          <h3 class="mb-0 fs-2">{{ totalUsuarios() }}</h3>
+        </div>
+        <span class="material-symbols-outlined fs-1">group</span>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="tarjeta tarjeta-stat borde-alerta p-3 d-flex align-items-center justify-content-between">
+        <div class="text-center w-100">
+          <p class="text-muted mb-1 small text-uppercase fw-bold">Stock Bajo</p>
+          <h3 class="mb-0 fs-2">{{ stockBajo() }}</h3>
+        </div>
+        <span class="material-symbols-outlined fs-1">inventory_2</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-4 d-flex gap-2">
+    <button (click)="toggleVista('inventario')" class="btn-enviar" [ngClass]="vistaActual() === 'inventario' ? 'btn-primary' : 'btn-outline-primary'">Inventario</button>
+    <button (click)="toggleVista('usuarios')" class="btn-enviar" [ngClass]="vistaActual() === 'usuarios' ? 'btn-primary' : 'btn-outline-primary'">Usuarios</button>
+  </div>
+
+  @if (vistaActual() === 'inventario') {
+  <div class="registro-contenedor">
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-3">
+      <h4 class="mb-0 text-secondary">Gestión de Inventario</h4>
+      <button class="btn-enviar d-flex align-items-center gap-1 btn-sm" (click)="alertaProximamente()">
+        <span class="material-symbols-outlined fs-6">add</span> Añadir Juego
+      </button>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle tabla-admin">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre del Juego</th>
+            <th>Categoría</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (juego of juegoService.juegos(); track juego.id) {
+          <tr>
+            <td>#{{ juego.id }}</td>
+            <td class="fw-bold">{{ juego.nombre }}</td>
+            <td>{{ juego.categoria }}</td>
+            <td>{{ juego.precio }}</td>
+            <td><span class="badge" [ngClass]="juego.stock < 5 ? 'bg-danger' : 'bg-success'">{{ juego.stock }}</span></td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-outline-danger" (click)="eliminarJuego(juego.id)" title="Eliminar Item">
+                <span class="material-symbols-outlined fs-6">delete</span>
+              </button>
+            </td>
+          </tr>
+          } @empty {
+          <tr><td colspan="6" class="text-center">No hay juegos registrados.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  }
+
+  @if (vistaActual() === 'usuarios') {
+  <div class="registro-contenedor">
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-3">
+      <h4 class="mb-0 text-secondary">Gestión de Usuarios</h4>
+    </div>
+    
+    <div class="table-responsive">
+      <table class="table table-hover align-middle tabla-usuarios">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Usuario</th>
+            <th>Email</th>
+            <th class="text-center">Rol</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (u of usuarios(); track u.username) {
+          <tr>
+            <td>{{ u.nombre }}</td>
+            <td>{{ u.username }}</td>
+            <td>{{ u.email }}</td>
+            <td class="text-center">
+              
+              @if (esAdminMaestro()) {
+                <button class="btn btn-sm text-white" 
+                        [ngClass]="u.rol === 'admin' ? 'bg-danger' : 'bg-success'" 
+                        (click)="toggleRol(u.username)"
+                        [disabled]="u.email === 'admin@sev.cl'">
+                  {{ u.rol === 'admin' ? 'Admin' : 'Cliente' }}
+                </button>
+              } @else {
+                <span class="badge" [ngClass]="u.rol === 'admin' ? 'bg-danger' : 'bg-success'">
+                  {{ u.rol === 'admin' ? 'Admin' : 'Cliente' }}
+                </span>
+              }
+
+            </td>
+          </tr>
+          } @empty {
+          <tr><td colspan="4" class="text-center">No hay usuarios registrados.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  }
+</main>

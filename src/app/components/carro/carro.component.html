@@ -1,0 +1,41 @@
+<main class="container py-5">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle tabla-carrito">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (item of carritoService.itemsAgrupados(); track item.id) {
+                <tr>
+                    <td>{{ item.nombre }}</td>
+                    <td>{{ item.precio }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-secondary"
+                            (click)="carritoService.modificarCantidad(item.id, -1)">-</button>
+                        {{ item.cantidad }}
+                        <button class="btn btn-sm btn-outline-secondary"
+                            (click)="carritoService.modificarCantidad(item.id, 1)">+</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger btn-sm"
+                            (click)="carritoService.eliminar(item.id)">Eliminar</button>
+                    </td>
+                </tr>
+                } @empty {
+                <tr>
+                    <td colspan="4" class="text-center">Aún no tienes productos en tu carrito, sigue visitando nuestro catálogo.</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        <div class="text-end">
+            <h3>Total: ${{ carritoService.total.toLocaleString() }}</h3>
+            <button class="btn btn-primary" (click)="pagar()">Pagar Ahora</button>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,474 @@
+/* You can add global styles to this file, and also import other style files */
+/* ========================================================= */
+/* VARIABLES */
+/* Centraliza colores, tipografias y medidas para facilitar cambios globales */
+/* ========================================================= */
+$color-principal: #2c3e50;
+$color-secundario: #16526e;
+$color-secundario-hover: #187969;
+$color-fondo: #ecf0f1;
+$color-texto: #333333;
+$color-blanco: #ffffff;
+$color-suave: #d5dbdb;
+$color-exito: #27ae60;
+$color-alerta: #c0392b;
+$color-sombra: #CFC1BE;
+$color-descripcion: #666;
+$color-sin-descuento: #999;
+
+$fuente-principal: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+$espaciado-pequeno: 10px;
+$espaciado-medio: 20px;
+$espaciado-grande: 40px;
+
+$radio-borde: 12px;
+$sombra-suave: 0 4px 10px rgba(0, 0, 0, 0.1);
+$sombra-fuerte: 0 8px 20px rgba(0, 0, 0, 0.2);
+
+/* ========================================================= */
+/* ESTILOS GENERALES */
+/* ========================================================= */
+
+/* Esto asegura que la aplicación ocupe toda la pantalla */
+html,
+.principal {
+    height: 100%;
+    margin: 0;
+    min-height: 100vh;
+    background-color: var(--color-fondo);
+}
+
+app-root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+app-header {
+    display: contents;
+}
+
+html {
+    scroll-padding-top: 130px;
+    scroll-behavior: smooth;
+}
+
+.principal {
+    margin: 0;
+    font-family: $fuente-principal;
+    background-color: $color-fondo;
+    color: $color-texto;
+    line-height: 1.6;
+    scroll-behavior: smooth;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+.contenedor {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ========================================================= */
+/* ANIMACIONES */
+/* ========================================================= */
+
+/* Animación 1: Aparecer desde abajo (para el encabezado) */
+@keyframes aparecerDesdeAbajo {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animación 2: Aparecer suave (para las tarjetas al cargar) */
+@keyframes aparecerSuave {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Animación 3: Zoom suave (para imágenes de categorías en hover) */
+@keyframes zoomSuave {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.05);
+    }
+}
+
+/* Animación 4: Latido (para destacar los descuentos) */
+@keyframes latido {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+        color: $color-alerta;
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.encabezado {
+    min-height: 20vh;
+    background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.9)), url('/img/fondo-banner.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: $color-blanco;
+}
+
+.encabezado-contenido {
+    animation: aparecerDesdeAbajo 1s ease;
+}
+
+.encabezado h1 {
+    font-family: "Caveat", cursive;
+    font-size: 3.5rem;
+    margin-bottom: $espaciado-pequeno;
+}
+
+.encabezado p {
+    font-size: 1.2rem;
+    margin-bottom: $espaciado-medio;
+}
+
+.subtitulo {
+    font-size: 0.9rem !important;
+}
+
+/* ========================================================= */
+/* BOTONES */
+/* ========================================================= */
+.boton-secundario {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: bold;
+    background-color: $color-principal;
+    color: $color-blanco;
+    border: 2px solid $color-principal;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.boton-secundario:hover {
+    transform: translateY(-4px);
+    background-color: $color-blanco;
+    color: $color-principal;
+}
+
+/* ========================================================= */
+/* NAVEGACIÓN */
+/* ========================================================= */
+.navegacion {
+    background-color: $color-principal !important;
+    padding: 10px 15px !important;
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    box-shadow: $sombra-suave;
+}
+
+.navegacion .nav-link {
+    color: $color-blanco !important;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.3s ease;
+}
+
+.navegacion .nav-link:hover {
+    color: $color-secundario;
+}
+
+.navegacion a .material-symbols-outlined {
+    font-size: 1.2rem;
+}
+
+/* ========================================================= */
+/* SECCIONES */
+/* ========================================================= */
+.seccion {
+    padding: $espaciado-grande 0;
+}
+
+.seccion-alterna {
+    background-color: $color-blanco;
+}
+
+.seccion-header h2 {
+    color: $color-principal;
+    font-size: 2.2rem;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.seccion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $espaciado-medio;
+    border-bottom: 2px solid $color-suave;
+    padding-bottom: 10px;
+}
+
+/* ========================================================= */
+/* TARJETAS */
+/* ========================================================= */
+
+.tarjeta {
+    background-color: $color-blanco;
+    border-radius: $radio-borde;
+    overflow: hidden;
+    box-shadow: $sombra-suave;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: aparecerSuave 0.8s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.tarjeta:hover {
+    transform: translateY(-8px);
+    box-shadow: $sombra-fuerte;
+}
+
+.tarjeta img {
+    width: 50%;
+    height: 180px;
+    object-fit: contain;
+    margin: 15px auto 0 auto;
+}
+
+/* Tarjetas específicas */
+a.enlace-categoria {
+    text-decoration: none;
+    display: block;
+    height: 100%;
+}
+
+.tarjeta-stat {
+    border-left: 5px solid $color-secundario;
+    color: $color-suave;
+}
+
+.borde-exito {
+    border-left: 5px solid  $color-exito !important;
+}
+
+.borde-alerta {
+    border-left: 5px solid  $color-alerta !important;
+}
+
+.tarjeta-categoria {
+    border: 2px solid transparent;
+}
+
+.tarjeta-categoria:hover {
+    border: 2px solid $color-sombra;
+}
+
+.tarjeta-categoria img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    margin: 0;
+}
+
+.tarjeta-categoria:hover img {
+    animation: zoomSuave 0.5s ease forwards;
+}
+
+.tarjeta-categoria h3 {
+    text-align: center;
+    margin-bottom: 0;
+    font-size: 1.5rem;
+}
+
+.tarjeta-contenido {
+    padding: $espaciado-medio;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: $color-blanco;
+    position: relative;
+    z-index: 2;
+}
+
+.tarjeta h3 {
+    color: $color-principal;
+    margin-top: 0;
+    margin-bottom: $espaciado-pequeno;
+}
+
+.descripcion {
+    color: $color-descripcion;
+    flex-grow: 1;
+}
+
+.precio-contenedor {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid $color-suave;
+}
+
+.precio {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: $color-principal;
+    margin: 0 0 5px 0;
+}
+
+.descuento {
+    color: $color-exito;
+    font-weight: bold;
+    margin: 0;
+    animation: latido 2s infinite ease-in-out;
+}
+
+.sin-descuento {
+    color: $color-sin-descuento;
+    font-style: italic;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* ========================================================= */
+/* TABLAS */
+/* ========================================================= */
+.tabla-admin thead th,
+.tabla-carrito thead th,
+.tabla-usuarios thead th {
+    background-color: $color-principal;
+    color: $color-blanco;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    padding: 12px;
+}
+
+.tabla-admin,
+.tabla-usuarios,
+.tabla-carrito {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* ========================================================= */
+/* FORMULARIO Y PIE DE PÁGINA */
+/* ========================================================= */
+.registro-contenedor {
+    background-color: $color-blanco;
+    border-radius: $radio-borde;
+    padding: $espaciado-grande;
+    box-shadow: $sombra-suave;
+    position: relative;
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.btn-enviar {
+    background-color: $color-secundario;
+    color: white;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 25px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-enviar:hover {
+    background-color: $color-secundario-hover;
+    transform: translateY(-2px);
+}
+
+.btn-limpiar {
+    background-color: $color-suave;
+    color: $color-texto;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 25px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.pie-pagina {
+    background-color: $color-principal;
+    color: $color-blanco;
+    text-align: center;
+    padding: $espaciado-medio;
+    margin-top: $espaciado-grande;
+}
+
+.scroll-lista {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+/* ========================================================= */
+/* MEDIA QUERIES (Responsividad) */
+/* ========================================================= */
+@media (max-width: 900px) {
+    .encabezado h1 {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .encabezado {
+        min-height: 40vh;
+    }
+
+    .encabezado h1 {
+        font-size: 2.2rem;
+    }
+
+    .encabezado p {
+        font-size: 1rem;
+    }
+
+    .seccion-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .seccion h2 {
+        font-size: 1.8rem;
+    }
+}

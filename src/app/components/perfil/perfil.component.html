@@ -1,0 +1,129 @@
+<main class="container py-5 flex-grow-1">
+    <div class="seccion-header mb-4">
+        <h2><span class="material-symbols-outlined fs-2">manage_accounts</span> Configuración de Cuenta</h2>
+    </div>
+
+    @if (authService.usuarioActual(); as usuario) {
+    <div class="row g-4">
+        <div class="col-12 col-lg-4">
+            <div class="tarjeta p-4 text-center h-100">
+                <div class="mb-3">
+                    <span class="material-symbols-outlined"
+                        style="font-size: 6rem; color: var(--color-suave);">account_circle</span>
+                </div>
+                <h3 class="fs-4 mb-1">{{ usuario.nombre }}</h3>
+                <p class="text-muted mb-3">{{ '@' + usuario.username }}</p>
+
+                <span class="badge text-uppercase" style="background-color: var(--color-principal);">
+                    Rol: {{ usuario.rol }}
+                </span>
+
+                <hr class="my-4">
+
+                <p><strong>Juegos comprados:</strong></p>
+                <div class="scroll-lista border p-2 bg-light text-start">
+                    <ul class="list-unstyled mb-0">
+                        @if (usuario.email === 'admin@sev.cl') {
+                        <li class="p-2 text-muted small text-center">Panel de Administrador:<br>Historial no disponible.
+                        </li>
+                        }
+                        @else if (historialAgrupado().length === 0) {
+                        <li class="p-2 text-muted small text-center">Aún no has realizado compras.</li>
+                        }
+                        @else {
+                        @for (item of historialAgrupado(); track item.nombre) {
+                        <li class="p-2 border-bottom d-flex justify-content-between align-items-center small">
+                            <strong>{{ item.nombre }}</strong>
+                            <span class="badge bg-primary">Cant: {{ item.cantidad }}</span>
+                        </li>
+                        }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-8">
+            <div class="registro-contenedor h-100">
+                <h4 class="mb-4 text-secondary border-bottom pb-2">Datos Personales</h4>
+
+                @if (perfilForm) {
+                <form [formGroup]="perfilForm" (ngSubmit)="onSubmit()">
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Nombre Completo *</label>
+                            <input type="text" formControlName="nombre" class="form-control"
+                                [class.is-invalid]="perfilForm.get('nombre')?.invalid && perfilForm.get('nombre')?.touched">
+                        </div>
+                        <div class="col-md-6 mt-3 mt-md-0">
+                            <label class="form-label">Nombre de Usuario</label>
+                            <input type="text" formControlName="usuario" class="form-control bg-light">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Correo Electrónico</label>
+                            <input type="email" formControlName="email" class="form-control bg-light">
+                        </div>
+                        <div class="col-md-6 mt-3 mt-md-0">
+                            <label class="form-label">Fecha de Nacimiento *</label>
+                            <input type="date" formControlName="fechaNacimiento" class="form-control"
+                                [class.is-invalid]="perfilForm.get('fechaNacimiento')?.invalid && perfilForm.get('fechaNacimiento')?.touched">
+                            @if (perfilForm.get('fechaNacimiento')?.errors?.['menorEdad']) {
+                            <div class="invalid-feedback d-block">Debes ser mayor de 13 años.</div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Dirección de Despacho</label>
+                        <input type="text" formControlName="direccion" class="form-control"
+                            placeholder="Ej: Av. Providencia 123">
+                    </div>
+
+                    <h4 class="mb-3 text-secondary border-bottom pb-2 mt-5">Cambiar Contraseña</h4>
+                    <p class="text-muted small mb-3">Deja estos campos en blanco si no deseas cambiar tu contraseña.</p>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label">Nueva Contraseña</label>
+                            <input type="password" formControlName="password" class="form-control"
+                                [class.is-invalid]="perfilForm.get('password')?.invalid && perfilForm.get('password')?.touched">
+                            @if (perfilForm.get('password')?.errors?.['pattern']) {
+                            <div class="invalid-feedback d-block">Debe tener entre 8-20 caracteres, 1 mayúscula, 1
+                                número y 1 símbolo.</div>
+                            }
+                        </div>
+                        <div class="col-md-6 mt-3 mt-md-0">
+                            <label class="form-label">Confirmar Nueva Contraseña</label>
+                            <input type="password" formControlName="confirmPassword" class="form-control"
+                                [class.is-invalid]="perfilForm.errors?.['noCoincide'] && perfilForm.get('confirmPassword')?.touched">
+                            @if (perfilForm.errors?.['noCoincide']) {
+                            <div class="invalid-feedback d-block">Las contraseñas no coinciden.</div>
+                            }
+                        </div>
+                    </div>
+
+                    @if (mensajeExito()) {
+                    <div class="alert alert-success" role="alert">
+                        <span class="material-symbols-outlined align-middle me-1">check_circle</span>
+                        ¡Tus datos han sido actualizados con éxito!
+                    </div>
+                    }
+
+                    <div class="text-end mt-4">
+                        <button type="submit" class="btn-enviar px-5"
+                            [disabled]="perfilForm.invalid">
+                            Guardar Cambios
+                        </button>
+                    </div>
+
+                </form>
+                }
+            </div>
+        </div>
+    </div>
+    }
+</main>

@@ -1,0 +1,102 @@
+<!-- Si se accede a login/registro/recuperar no muestra este componente -->
+@if (!isAuthRoute()) {
+  <!-- Si es admin muestra su navbar propio -->
+@if (isAdminRoute()) {
+<nav class="navbar navbar-expand-md navbar-dark sticky-top" style="background-color: #1a252f; z-index: 1030;">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/"
+      style="font-family: 'Caveat', cursive; font-size: 2rem;">
+      <span class="material-symbols-outlined">admin_panel_settings</span> SEV Toys Admin
+    </a>
+    <button class="navbar-toggler" type="button" (click)="toggleMenu()" [attr.aria-expanded]="isMenuOpen()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" [class.show]="isMenuOpen()">
+      <div class="navbar-nav gap-3 align-items-center">
+        <a class="nav-link" routerLink="/" (click)="closeMenu()">Catálogo</a>
+        <a class="nav-link" routerLink="/perfil" (click)="closeMenu()">Mi Perfil</a>
+        <button class="btn boton-secundario btn-sm ms-md-2" (click)="logout(); closeMenu()">Cerrar Sesión</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+}
+<!-- header y navbar para clientes  -->
+@else {
+<header class="encabezado" id="inicio">
+  <div class="contenedor encabezado-contenido">
+    <h1>SEV Toys</h1>
+    <p>Descubre un mundo mágico y divertido. Especialistas en Juegos de Mesa</p>
+  </div>
+</header>
+
+<nav class="navbar navbar-expand-md navbar-dark navegacion sticky-top" style="z-index: 1030;">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" (click)="toggleMenu()" [attr.aria-expanded]="isMenuOpen()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" [class.show]="isMenuOpen()">
+      <ul class="navbar-nav gap-3 align-items-center">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMenu()">
+            <span class="material-symbols-outlined">home</span>Inicio
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" fragment="indice-categorias" (click)="closeMenu()">
+            <span class="material-symbols-outlined">category</span>Categorías
+          </a>
+        </li>
+        <!-- Ocultar carrito si el usuario es admin -->
+        @if (!esAdmin) {
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/carro" (click)="closeMenu()">
+            <span class="material-symbols-outlined">shopping_cart</span>Carrito
+          </a>
+        </li>
+        }
+        <!-- Si el usuario esta logueado muestra opciones de sesion -->
+        @if (authService.estaLogueado()) {
+          <!-- Si es cliente -->
+        @if (!esAdmin) {
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/perfil" (click)="closeMenu()">
+            <span class="material-symbols-outlined">person</span>Mi Perfil
+          </a>
+        </li>
+        }
+        <!-- Si es admin -->
+        @if (esAdmin) {
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/admin" (click)="closeMenu()">
+            <span class="material-symbols-outlined">admin_panel_settings</span>Panel de Control
+          </a>
+        </li>
+        }
+        <li class="nav-item">
+          <button class="nav-link bg-transparent border-0" (click)="logout(); closeMenu()"><span class="material-symbols-outlined">logout</span>Cerrar
+          Sesión</button>
+        </li>
+
+        } 
+        <!-- Si no esta logueado muestra opciones para registro o inicio de sesion -->
+        @else {
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/registro" (click)="closeMenu()">
+            <span class="material-symbols-outlined">person_add</span>Registro
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login" (click)="closeMenu()">
+            <span class="material-symbols-outlined">login</span>Iniciar Sesión
+          </a>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+</nav>
+}
+}

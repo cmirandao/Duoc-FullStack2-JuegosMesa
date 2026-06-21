@@ -4,6 +4,26 @@ Todas las notas de los cambios notables de este proyecto serán documentadas en 
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto se adhiere al [Versionado Semántico](https://semver.org/lang/es/).
 
+## [1.1.0] - 2026-06-21
+
+### Añadido (Added)
+- **Vista de Detalle de Producto:** Nueva ruta dinámica (`detalle/:id`) para visualizar información individual de cada juego. Incluye un selector numérico de cantidad estrictamente vinculado a los límites de inventario y estandarización visual de imágenes mediante `object-fit`.
+- **Notificaciones UI:** Nuevo sistema global de alertas efímeras (Toasts) controladas mediante Angular Signals, reemplazando las ventanas bloqueantes del navegador.
+- **SweetAlert2:** Integración de modales interactivos para las acciones críticas de administración (ej. eliminación de juegos y confirmaciones).
+- **Vitest:** Implementación de un entorno de pruebas moderno, rápido y compatible con la arquitectura Zoneless de las nuevas versiones de Angular.
+- **Testing Arquitectónico:** Implementación completa de las pruebas unitarias a un modelo de "Viaje en el tiempo" nativo (`vi.useFakeTimers()`)
+
+### Cambiado (Changed)
+- **Refactorización de Servicios:** Los servicios (`JuegoService`, `CarritoService`) ahora retornan objetos de estado lógico en lugar de interactuar directamente con el DOM, respetando el principio de responsabilidad única.
+
+### Solucionado (Fixed)
+- **Estilos del Botón de Pago:** Agregada la pseudo-clase `:disabled` en SCSS para oscurecer y bloquear visualmente el botón cuando el carrito está vacío.
+- **Inyección de Dependencias en Pruebas:** Resuelto el error `NG0201 (No provider for ActivatedRoute)` aislando correctamente los componentes que utilizan `RouterLink`.
+
+### Eliminado (Removed)
+- Uso de `window.alert()` y `window.confirm()` en toda la aplicación para mejorar drásticamente la experiencia de usuario (UX).
+- Dependencias legacy de Jasmine y Karma en favor del ecosistema Vite/Vitest.
+
 ## [1.0.0] - 2026-06-14
 
 ### Añadido (Added)

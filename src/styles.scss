@@ -36,7 +36,7 @@ html,
     height: 100%;
     margin: 0;
     min-height: 100vh;
-    background-color: var(--color-fondo);
+    background-color: $color-fondo;
 }
 
 app-root {
@@ -66,6 +66,23 @@ html {
 img {
     max-width: 100%;
     display: block;
+}
+
+.imagen-clickable {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.03);
+    opacity: 0.9;
+  }
+}
+.img-detalle {
+    width: 100%;
+    height: 400px;
+    object-fit: contain;   
+    object-position: center;
+    background-color: $color-fondo; 
 }
 
 .contenedor {
@@ -288,11 +305,11 @@ a.enlace-categoria {
 }
 
 .borde-exito {
-    border-left: 5px solid  $color-exito !important;
+    border-left: 5px solid $color-exito !important;
 }
 
 .borde-alerta {
-    border-left: 5px solid  $color-alerta !important;
+    border-left: 5px solid $color-alerta !important;
 }
 
 .tarjeta-categoria {
@@ -410,6 +427,17 @@ a.enlace-categoria {
     padding: 10px 25px;
     font-weight: bold;
     transition: all 0.3s ease;
+
+    &:disabled {
+        background-color: $color-sin-descuento;
+        cursor: not-allowed;
+        opacity: 0.7;
+
+        &:hover {
+            background-color: $color-descripcion;
+            transform: translateY(-2px);
+        }
+    }
 }
 
 .btn-enviar:hover {

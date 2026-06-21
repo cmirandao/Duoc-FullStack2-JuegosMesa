@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/AuthService/auth-service';
@@ -15,6 +15,9 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
+  // Para mostrar mensajes de error en vez de usar alert
+  mensajeError = signal<string | null>(null);
+
   loginForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required]
@@ -28,18 +31,19 @@ export class LoginComponent {
     const usuario = usuarios.find((u: any) => u.email === email);
 
     if (!usuario) {
-      alert("Error: Este correo no está registrado.");
+      this.mensajeError.set("Error: Este correo no está registrado.");
       return;
     }
 
     if (usuario.password !== password) {
-      alert("Error: La contraseña es incorrecta.");
+      this.mensajeError.set("Error: La contraseña es incorrecta.");
       return;
     }
 
     /*
     *  Iniciar sesion usando el servicio para emitir el cambio a toda la aplicacion
     */
+    this.mensajeError.set(null);
     this.authService.login(usuario);
 
     // Redirigir segun rol

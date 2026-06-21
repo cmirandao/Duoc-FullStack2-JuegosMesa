@@ -6,7 +6,7 @@ export interface Juego {
   id: number;
   nombre: string;
   categoria: string;
-  precio: string;
+  precio: number;
   stock: number;
   desc: string;
   img: string;

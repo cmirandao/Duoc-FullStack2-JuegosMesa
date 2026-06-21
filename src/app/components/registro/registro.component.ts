@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -14,9 +14,11 @@ export class RegistroComponent {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private authService = inject(AuthService);
-/* 
- * Inicializacion del formulario y sus validaciones 
-*/
+  // Para mostrar mensajes de error y manejar el estado de la alerta en vez de usar alert
+  alertaGlobal = signal<{ tipo: 'success' | 'danger', mensaje: string } | null>(null);
+  /* 
+   * Inicializacion del formulario y sus validaciones 
+  */
   registroForm: FormGroup = this.fb.group({
     nombre: ['', Validators.required],
     usuario: ['', Validators.required],
@@ -38,11 +40,12 @@ export class RegistroComponent {
     const registroExitoso = this.authService.registrarUsuario(nuevoUsuario);
 
     if (registroExitoso) {
-      alert("¡Registro exitoso! Ya puedes iniciar sesión.");
-      this.router.navigate(['/login']);
+      this.alertaGlobal.set({ tipo: 'success', mensaje: "¡Registro exitoso! Redirigiendo al login..." });
+      setTimeout(() => {
+        this.router.navigate(['/login']);
+      }, 2000);
     } else {
-      // Si registrarUsuario devolvió false, es porque el correo ya existe
-      alert("Error: Este correo electrónico ya se encuentra registrado.");
+      this.alertaGlobal.set({ tipo: 'danger', mensaje: "Error: Este correo electrónico ya se encuentra registrado." });
     }
   }
   /*
@@ -50,6 +53,7 @@ export class RegistroComponent {
   */
   onReset() {
     this.registroForm.reset();
+    this.alertaGlobal.set(null);
   }
 
   /*

@@ -19,6 +19,16 @@
       }
     </div>
   </div>
+  @if (alertaCatalogo(); as alerta) {
+  <div
+    class="alert alert-{{ alerta.tipo }} d-flex align-items-center position-fixed top-0 start-50 translate-middle-x mt-4 shadow"
+    style="z-index: 1050; width: 90%; max-width: 600px;" role="alert">
+    <span class="material-symbols-outlined me-2">
+      {{ alerta.tipo === 'success' ? 'shopping_cart_checkout' : 'inventory_2' }}
+    </span>
+    <div>{{ alerta.mensaje }}</div>
+  </div>
+  }
 </section>
 
 <!-- Tarjetas de inventario -->
@@ -32,12 +42,12 @@
       @for (juego of juegosPorCategoria(cat); track juego.id) {
       <div class="col-12 col-md-6 col-lg-4">
         <article class="tarjeta">
-          <img [src]="juego.img" [alt]="juego.nombre">
+          <img [src]="juego.img" [alt]="juego.nombre" [routerLink]="['/detalle', juego.id]" class="tarjeta-img">
           <div class="tarjeta-contenido">
             <h3>{{ juego.nombre }}</h3>
             <p class="descripcion">{{ juego.desc }}</p>
             <div class="precio-contenedor">
-              <p class="precio">{{ juego.precio }}</p>
+              <p class="precio">{{ juego.precio | currency: 'CLP': 'symbol': '1.0-0' }}</p>
 
               <p class="small fw-bold" [ngClass]="juego.stock === 1 ? 'text-warning' : 'text-danger'">
                 @if (juego.stock <= 0) { Sin stock } @else if (juego.stock===1) { ¡Última unidad! } @else { Stock: {{

@@ -36,8 +36,20 @@
   </div>
 
   <div class="mb-4 d-flex gap-2">
-    <button (click)="toggleVista('inventario')" class="btn-enviar" [ngClass]="vistaActual() === 'inventario' ? 'btn-primary' : 'btn-outline-primary'">Inventario</button>
-    <button (click)="toggleVista('usuarios')" class="btn-enviar" [ngClass]="vistaActual() === 'usuarios' ? 'btn-primary' : 'btn-outline-primary'">Usuarios</button>
+    <button (click)="toggleVista('inventario')" class="btn-enviar"
+      [ngClass]="vistaActual() === 'inventario' ? 'btn-primary' : 'btn-outline-primary'">Inventario</button>
+    <button (click)="toggleVista('usuarios')" class="btn-enviar"
+      [ngClass]="vistaActual() === 'usuarios' ? 'btn-primary' : 'btn-outline-primary'">Usuarios</button>
+    @if (mensaje(); as alerta) {
+    <div
+      class="alert alert-{{ alerta.tipo }} d-flex align-items-center position-fixed top-0 start-50 translate-middle-x mt-4 shadow"
+      style="z-index: 1050; width: 90%; max-width: 600px;" role="alert">
+      <span class="material-symbols-outlined me-2">
+        upcoming
+      </span>
+      <div>{{ alerta.mensaje }}</div>
+    </div>
+    }
   </div>
 
   @if (vistaActual() === 'inventario') {
@@ -67,8 +79,9 @@
             <td>#{{ juego.id }}</td>
             <td class="fw-bold">{{ juego.nombre }}</td>
             <td>{{ juego.categoria }}</td>
-            <td>{{ juego.precio }}</td>
-            <td><span class="badge" [ngClass]="juego.stock < 5 ? 'bg-danger' : 'bg-success'">{{ juego.stock }}</span></td>
+            <td>{{ juego.precio | currency: 'CLP': 'symbol': '1.0-0' }}</td>
+            <td><span class="badge" [ngClass]="juego.stock < 5 ? 'bg-danger' : 'bg-success'">{{ juego.stock }}</span>
+            </td>
             <td class="text-center">
               <button class="btn btn-sm btn-outline-danger" (click)="eliminarJuego(juego.id)" title="Eliminar Item">
                 <span class="material-symbols-outlined fs-6">delete</span>
@@ -76,7 +89,9 @@
             </td>
           </tr>
           } @empty {
-          <tr><td colspan="6" class="text-center">No hay juegos registrados.</td></tr>
+          <tr>
+            <td colspan="6" class="text-center">No hay juegos registrados.</td>
+          </tr>
           }
         </tbody>
       </table>
@@ -89,7 +104,7 @@
     <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-3">
       <h4 class="mb-0 text-secondary">Gestión de Usuarios</h4>
     </div>
-    
+
     <div class="table-responsive">
       <table class="table table-hover align-middle tabla-usuarios">
         <thead>
@@ -107,24 +122,24 @@
             <td>{{ u.username }}</td>
             <td>{{ u.email }}</td>
             <td class="text-center">
-              
+
               @if (esAdminMaestro()) {
-                <button class="btn btn-sm text-white" 
-                        [ngClass]="u.rol === 'admin' ? 'bg-danger' : 'bg-success'" 
-                        (click)="toggleRol(u.username)"
-                        [disabled]="u.email === 'admin@sev.cl'">
-                  {{ u.rol === 'admin' ? 'Admin' : 'Cliente' }}
-                </button>
+              <button class="btn btn-sm text-white" [ngClass]="u.rol === 'admin' ? 'bg-danger' : 'bg-success'"
+                (click)="toggleRol(u.username)" [disabled]="u.email === 'admin@sev.cl'">
+                {{ u.rol === 'admin' ? 'Admin' : 'Cliente' }}
+              </button>
               } @else {
-                <span class="badge" [ngClass]="u.rol === 'admin' ? 'bg-danger' : 'bg-success'">
-                  {{ u.rol === 'admin' ? 'Admin' : 'Cliente' }}
-                </span>
+              <span class="badge" [ngClass]="u.rol === 'admin' ? 'bg-danger' : 'bg-success'">
+                {{ u.rol === 'admin' ? 'Admin' : 'Cliente' }}
+              </span>
               }
 
             </td>
           </tr>
           } @empty {
-          <tr><td colspan="4" class="text-center">No hay usuarios registrados.</td></tr>
+          <tr>
+            <td colspan="4" class="text-center">No hay usuarios registrados.</td>
+          </tr>
           }
         </tbody>
       </table>

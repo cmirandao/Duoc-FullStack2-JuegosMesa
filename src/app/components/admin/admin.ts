@@ -2,6 +2,8 @@ import { Component, computed, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { JuegoService } from '../../services/JuegoService/juego-service';
 import { AuthService } from '../../services/AuthService/auth-service';
+// Para reemplazar los windows.confirm por algo mas estetico
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin',
@@ -16,6 +18,8 @@ export class AdminComponent implements OnInit {
   // Alternar paneles de administracion
   vistaActual = signal<'inventario' | 'usuarios'>('inventario');
   usuarios = signal<any[]>([]);
+  // Para mostrar mensajes de error en vez de usar alert
+  mensaje = signal<{ tipo: 'success' | 'danger', mensaje: string } | null>(null);
 
   // Calculo de KPIs del dashboard de administrador
   stockBajo = computed(() => this.juegoService.juegos().filter(j => j.stock < 5).length);
@@ -34,9 +38,28 @@ export class AdminComponent implements OnInit {
   }
   // Elimina un juego junto a todo su stock
   eliminarJuego(id: number) {
-    if (confirm(`¿Estás seguro de eliminar el juego #${id}? Esto eliminará todo el stock disponible.`)) {
-      this.juegoService.eliminarJuego(id);
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: `Estás a punto de eliminar el juego #${id} y todo su stock. ¡Esta acción no se puede deshacer!`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#c0392b',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true
+    }).then((result) => {
+      // Esta promesa se resuelve cuando el usuario hace clic en algun boton
+      if (result.isConfirmed) {
+        this.juegoService.eliminarJuego(id);
+        // Mostrar mensaje de exito
+        Swal.fire(
+          '¡Eliminado!',
+          'El juego ha sido borrado del inventario.',
+          'success'
+        );
+      }
+    });
   }
 
   // Logica para cambiar roles (Solo Admin Maestro)
@@ -59,6 +82,13 @@ export class AdminComponent implements OnInit {
   }
 
   alertaProximamente() {
-    alert('Próximamente...');
+    this.mostrarAlerta('danger', 'Próximamente...');
+  }
+
+  private mostrarAlerta(tipo: 'success' | 'danger', mensaje: string) {
+    this.mensaje.set({ tipo, mensaje });
+    setTimeout(() => {
+      this.mensaje.set(null);
+    }, 3000);
   }
 }

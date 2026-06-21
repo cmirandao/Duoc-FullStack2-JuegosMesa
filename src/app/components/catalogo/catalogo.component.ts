@@ -1,4 +1,4 @@
-import { Component, inject, computed } from '@angular/core';
+import { Component, inject, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -18,6 +18,9 @@ export class CatalogoComponent {
   authService = inject(AuthService);
   carroService = inject(CarritoService);
 
+  // Para mostrar mensajes de error y manejar el estado de la alerta en vez de usar alert
+  alertaCatalogo = signal<{ tipo: 'success' | 'danger', mensaje: string } | null>(null);
+
   // Mapeo de categorias a sus imagenes
   categoriaConfig: Record<string, string> = {
     'Estrategia': 'cat_estrategia.png',
@@ -34,7 +37,7 @@ export class CatalogoComponent {
     const lista = this.juegoService.juegos();
     return [...new Set(lista.map(j => j.categoria))];
   });
-  
+
   getId(nombre: string) { return nombre.toLowerCase().replace(' ', '-'); }
 
   // Helper para obtener la imagen
@@ -53,9 +56,19 @@ export class CatalogoComponent {
     if (juego.stock > 0) {
       this.juegoService.reducirStock(juego.id);
       this.carroService.agregar(juego);
-      alert("Agregado al carrito: " + juego.nombre);
+      this.mostrarAlerta('success', `¡Excelente! Agregaste ${juego.nombre} al carrito.`);
     } else {
-      alert("Lo sentimos, no hay stock disponible.");
+      this.mostrarAlerta('danger', 'Lo sentimos, este juego se ha quedado sin stock.');
     }
+  }
+
+  /*
+   * Muestra y oculta el mensaje de alerta
+   */
+  private mostrarAlerta(tipo: 'success' | 'danger', mensaje: string) {
+    this.alertaCatalogo.set({ tipo, mensaje });
+    setTimeout(() => {
+      this.alertaCatalogo.set(null);
+    }, 3000);
   }
 }

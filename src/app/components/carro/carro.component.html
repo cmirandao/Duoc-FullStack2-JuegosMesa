@@ -1,4 +1,12 @@
 <main class="container py-5">
+    @if (alertaPago(); as alerta) {
+    <div class="alert alert-{{ alerta.tipo }} d-flex align-items-center mb-4 shadow-sm" role="alert">
+        <span class="material-symbols-outlined me-2">
+            {{ alerta.tipo === 'success' ? 'verified' : (alerta.tipo === 'warning' ? 'person_add' : 'error') }}
+        </span>
+        <div>{{ alerta.mensaje }}</div>
+    </div>
+    }
     <div class="table-responsive">
         <table class="table table-hover align-middle tabla-carrito">
             <thead>
@@ -13,7 +21,7 @@
                 @for (item of carritoService.itemsAgrupados(); track item.id) {
                 <tr>
                     <td>{{ item.nombre }}</td>
-                    <td>{{ item.precio }}</td>
+                    <td>{{ item.precio | currency: 'CLP': 'symbol': '1.0-0' }}</td>
                     <td>
                         <button class="btn btn-sm btn-outline-secondary"
                             (click)="carritoService.modificarCantidad(item.id, -1)">-</button>
@@ -28,14 +36,15 @@
                 </tr>
                 } @empty {
                 <tr>
-                    <td colspan="4" class="text-center">Aún no tienes productos en tu carrito, sigue visitando nuestro catálogo.</td>
+                    <td colspan="4" class="text-center">Aún no tienes productos en tu carrito, sigue visitando nuestro
+                        catálogo.</td>
                 </tr>
                 }
             </tbody>
         </table>
         <div class="text-end">
-            <h3>Total: ${{ carritoService.total.toLocaleString() }}</h3>
-            <button class="btn btn-primary" (click)="pagar()">Pagar Ahora</button>
+            <h3>Total: {{ carritoService.total | currency: 'CLP': 'symbol': '1.0-0' }}</h3>
+            <button class="btn-enviar" (click)="pagar()" [disabled]="carritoService.itemsAgrupados().length === 0">Pagar Ahora</button>
         </div>
     </div>
 </main>

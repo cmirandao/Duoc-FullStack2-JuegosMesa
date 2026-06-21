@@ -1,0 +1,64 @@
+@if (juegoActual(); as juego) {
+<main class="container py-5">
+    
+    <div class="mb-4">
+        <a routerLink="/catalogo" class="text-decoration-none text-secondary">
+            <span class="material-symbols-outlined align-middle">arrow_back</span>
+            Volver al Catálogo
+        </a>
+    </div>
+
+    <div class="row bg-white shadow-sm rounded p-4 align-items-center">
+        <div class="col-md-6 text-center mb-4 mb-md-0">
+            <img [src]="juego.img" [alt]="juego.nombre" class="img-fluid rounded shadow-sm img-detalle">
+        </div>
+
+        <div class="col-md-6 d-flex flex-column justify-content-center">
+            
+            <span class="badge bg-secondary text-white w-25 mb-2">{{ juego.categoria }}</span>
+            <h1 class="display-5 fw-bold mb-3">{{ juego.nombre }}</h1>
+            
+            <p class="lead text-muted mb-4">{{ juego.desc }}</p>
+            
+            <h2 class="text-primary fw-bold mb-3">{{ juego.precio | currency:'CLP' }}</h2>
+
+            <div class="mb-4">
+                @if (juego.stock > 0) {
+                    <span class="text-success fw-bold">
+                        <span class="material-symbols-outlined align-middle me-1">check_circle</span>
+                        Stock disponible: {{ juego.stock }} unidades
+                    </span>
+                } @else {
+                    <span class="text-danger fw-bold">
+                        <span class="material-symbols-outlined align-middle me-1">cancel</span>
+                        Agotado temporalmente
+                    </span>
+                }
+            </div>
+
+            @if (juego.stock > 0) {
+            <div class="d-flex align-items-center gap-3 mt-2">
+                
+                <div class="input-group w-auto shadow-sm">
+                    <button class="btn btn-outline-secondary px-3" 
+                            (click)="decrementar()" 
+                            [disabled]="cantidadSeleccionada() === 1">-</button>
+                            
+                    <input type="text" class="form-control text-center fw-bold" style="max-width: 60px;" 
+                           [value]="cantidadSeleccionada()" readonly>
+                           
+                    <button class="btn btn-outline-secondary px-3" 
+                            (click)="incrementar()" 
+                            [disabled]="cantidadSeleccionada() === juego.stock">+</button>
+                </div>
+
+                <button class="btn btn-primary px-4 py-2 fw-bold shadow-sm" 
+                        (click)="agregarMultiplesAlCarrito()">
+                    Agregar al Carrito
+                </button>
+            </div>
+            }
+        </div>
+    </div>
+</main>
+}

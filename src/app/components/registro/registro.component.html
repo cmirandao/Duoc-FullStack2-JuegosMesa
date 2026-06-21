@@ -10,6 +10,14 @@
         </header>
 
         <form class="registro-contenedor" [formGroup]="registroForm" (ngSubmit)="onSubmit()" novalidate>
+            @if (alertaGlobal(); as alerta) {
+            <div class="alert alert-{{ alerta.tipo }} d-flex align-items-center mb-4" role="alert">
+                <span class="material-symbols-outlined me-2">
+                    {{ alerta.tipo === 'success' ? 'check_circle' : 'error' }}
+                </span>
+                <div>{{ alerta.mensaje }}</div>
+            </div>
+            }
             <div class="row mb-3">
                 <div class="col-12 col-md-6">
                     <label class="form-label">Nombre Completo *</label>

@@ -21,10 +21,7 @@ export class CarritoService {
    * Calculo del valor total de una compra 
   */
   get total() {
-    return this._items().reduce((acc, item) => {
-      const precio = parseInt(item.precio.replace(/[^0-9]/g, '')) || 0;
-      return acc + precio;
-    }, 0);
+    return this._items().reduce((acc, item) => acc + item.precio, 0);
   }
   /* 
    * Agrupa por juego para indicar el producto y su cantidad 
@@ -36,12 +33,12 @@ export class CarritoService {
       if (mapa.has(item.id)) {
         const existente = mapa.get(item.id);
         existente.cantidad++;
-        existente.subtotal = existente.cantidad * parseInt(item.precio.replace(/[^0-9]/g, ''));
+        existente.subtotal = existente.cantidad * item.precio;
       } else {
         mapa.set(item.id, {
           ...item,
           cantidad: 1,
-          subtotal: parseInt(item.precio.replace(/[^0-9]/g, ''))
+          subtotal: item.precio
         });
       }
     });
@@ -102,7 +99,9 @@ export class CarritoService {
     }
   }
 
-  // Elimina solo una instancia del producto en lugar de todos
+  /*
+   * Elimina solo una instancia del producto en lugar de todos
+   */
   private eliminarUnItem(id: number) {
     this._items.update(items => {
       const index = items.findIndex(i => i.id === id);
@@ -118,11 +117,13 @@ export class CarritoService {
   /*
   * Finaliza el proceso de compra, si existe sesion activa la registra en el historial 
   */
-  procesarPago(): boolean {
+  procesarPago(): { exito: boolean, mensaje: string, tipo: 'success' | 'warning' } {
     const carrito = this._items();
-    if (carrito.length === 0) return false;
+    if (carrito.length === 0) return { exito: false, mensaje: "Tu carrito está vacío.", tipo: 'warning' };
 
     const usuario = this.authService.usuarioActual();
+    let mensajeRespuesta = "";
+    let tipoRespuesta: 'success' | 'warning' = 'success';
 
     if (usuario) {
       let historial = JSON.parse(localStorage.getItem('historialCompras') || '[]');
@@ -135,13 +136,14 @@ export class CarritoService {
 
       historial.push(...compra);
       localStorage.setItem('historialCompras', JSON.stringify(historial));
-      alert("¡Muchas gracias por tu compra!");
+      mensajeRespuesta = "¡Muchas gracias por tu compra!";
     } else {
-      alert("¡Muchas gracias por tu compra! Te invitamos a registrarte y poder llevar el historial de tus compras.");
+      mensajeRespuesta = "¡Muchas gracias por tu compra! Te invitamos a registrarte y poder llevar el historial de tus compras.";
+      tipoRespuesta = 'warning';
     }
     // Vaciar carrito
     this._items.set([]);
     localStorage.removeItem('carrito');
-    return true;
+    return { exito: true, mensaje: mensajeRespuesta, tipo: tipoRespuesta };
   }
 }

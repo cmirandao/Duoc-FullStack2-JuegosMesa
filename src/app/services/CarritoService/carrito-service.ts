@@ -9,23 +9,29 @@ export class CarritoService {
   private platformId = inject(PLATFORM_ID);
   private juegoService = inject(JuegoService);
   private authService = inject(AuthService);
-  /* 
-   * Estado base del carrito inicializado desde localStorage 
-  */
+  /**
+   * @description Estado reactivo del carrito inicializado desde localStorage.
+   */
   private _items = signal<Juego[]>(this.cargarCarrito());
 
+  /**
+   * @description Devuelve los items actuales del carrito.
+   * @returns Array de juegos en el carrito.
+   */
   get items() {
     return this._items();
   }
-  /* 
-   * Calculo del valor total de una compra 
-  */
+  /**
+   * @description Calcula el total del carrito.
+   * @returns Suma de los precios de los items.
+   */
   get total() {
     return this._items().reduce((acc, item) => acc + item.precio, 0);
   }
-  /* 
-   * Agrupa por juego para indicar el producto y su cantidad 
-  */
+  /**
+   * @description Agrupa los items del carrito por juego.
+   * @returns Array de juegos con cantidad y subtotal.
+   */
   itemsAgrupados = computed(() => {
     const mapa = new Map<number, any>();
 
@@ -45,18 +51,29 @@ export class CarritoService {
     return Array.from(mapa.values());
   });
 
+  /**
+   * @description Carga el carrito desde localStorage en el navegador.
+   * @returns Array de juegos actualmente en el carrito.
+   */
   private cargarCarrito(): Juego[] {
     if (!isPlatformBrowser(this.platformId)) return [];
     return JSON.parse(localStorage.getItem('carrito') || '[]');
   }
 
+  /**
+   * @description Agrega un juego al carrito y sincroniza el estado.
+   * @param juego Juego que se agregará.
+   * @returns void
+   */
   agregar(juego: Juego) {
     const carritoActual = this.cargarCarrito();
     const nuevoCarrito = [...carritoActual, juego];
     this.actualizarEstado(nuevoCarrito);
   }
-  /*
-   * Elimina un item completo desde el carrito y devuelve stock al inventario 
+  /**
+   * @description Elimina todas las instancias de un juego del carrito y devuelve stock al inventario.
+   * @param id Identificador del juego a eliminar.
+   * @returns void
    */
   eliminar(id: number) {
     const cantidadEnCarrito = this._items().filter(i => i.id === id).length;
@@ -67,23 +84,32 @@ export class CarritoService {
     this.guardar();
   }
 
+  /**
+   * @description Guarda el estado actual del carrito en localStorage.
+   * @returns void
+   */
   private guardar() {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('carrito', JSON.stringify(this._items()));
     }
   }
 
-  /* 
-  * Mantiene todo sincronizado 
-  */
+  /**
+   * @description Actualiza el carrito en memoria y en localStorage.
+   * @param nuevoCarrito Carrito actualizado.
+   * @returns void
+   */
   private actualizarEstado(nuevoCarrito: Juego[]) {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('carrito', JSON.stringify(nuevoCarrito));
       this._items.set(nuevoCarrito);
     }
   }
-  /*
-  * Manejo de botones de [+] y [-] del carrito
+  /**
+   * @description Modifica la cantidad de un juego en el carrito.
+   * @param id Identificador del juego.
+   * @param delta Incremento o decremento de unidades.
+   * @returns void
    */
   modificarCantidad(id: number, delta: number) {
     // Lógica: delta 1 (sumar) o -1 (restar)
@@ -99,8 +125,10 @@ export class CarritoService {
     }
   }
 
-  /*
-   * Elimina solo una instancia del producto en lugar de todos
+  /**
+   * @description Elimina una sola instancia de un juego en el carrito.
+   * @param id Identificador del juego.
+   * @returns void
    */
   private eliminarUnItem(id: number) {
     this._items.update(items => {
@@ -114,9 +142,10 @@ export class CarritoService {
     });
     this.guardar();
   }
-  /*
-  * Finaliza el proceso de compra, si existe sesion activa la registra en el historial 
-  */
+  /**
+   * @description Procesa el pago y registra el historial de compra si hay sesión activa.
+   * @returns Resultado de la compra con estado, mensaje y tipo de alerta.
+   */
   procesarPago(): { exito: boolean, mensaje: string, tipo: 'success' | 'warning' } {
     const carrito = this._items();
     if (carrito.length === 0) return { exito: false, mensaje: "Tu carrito está vacío.", tipo: 'warning' };

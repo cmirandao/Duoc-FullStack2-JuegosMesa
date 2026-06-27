@@ -14,27 +14,29 @@ export class RecuperarComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
 
-  /*
-  * Formulario reactivo
-  */
+  /**
+   * @description Formulario reactivo para la recuperación de cuenta.
+   */
   recuperarForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]]
   });
 
-  /*
-  * Señal para manejar el estado del mensaje ('idle' | 'exito' | 'no-existe')
-  */
+  /**
+   * @description Estado de la recuperación del correo ingresado.
+   */
   estadoRecuperacion = signal<'idle' | 'exito' | 'no-existe'>('idle');
 
+  /**
+   * @description Valida el correo ingresado para recuperación de cuenta.
+   * @returns void
+   */
   onSubmit() {
     if (this.recuperarForm.invalid) return;
 
     const emailIngresado = this.recuperarForm.value.email;
     const usuarios = this.authService.obtenerUsuarios();
 
-    /*
-    * Se verifica si el correo existe en la base de datos (localStorage)
-    */
+    // Se verifica si el correo existe en la base de datos (localStorage)
     const correoExiste = usuarios.some((u: any) => u.email === emailIngresado);
 
     if (correoExiste) {

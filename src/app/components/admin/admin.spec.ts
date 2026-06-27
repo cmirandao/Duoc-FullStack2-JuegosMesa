@@ -10,16 +10,22 @@ describe('AdminComponent', () => {
   let component: AdminComponent;
   let fixture: ComponentFixture<AdminComponent>;
 
-  // Mocks de Signals para simular el estado de la aplicación
+  /**
+   * @description Signal que simula el listado de juegos con stock bajo y normal.
+   */
   const mockJuegosSignal = signal([
-    { id: 1, stock: 2 },  // Stock bajo (menor a 5)
-    { id: 2, stock: 10 }  // Stock normal
+    { id: 1, stock: 2 },
+    { id: 2, stock: 10 }
   ]);
 
-  // Simulacion de Admin Maestro por defecto
+  /**
+   * @description Signal que representa al usuario administrador maestro por defecto.
+   */
   const mockUsuarioActualSignal = signal({ email: 'admin@sev.cl', nombre: 'Administrador' });
 
-  // Mocks de los Servicios
+  /**
+   * @description Mock del JuegoService utilizado por el componente Admin.
+   */
   const mockJuegoService = {
     juegos: mockJuegosSignal,
     eliminarJuego: vi.fn()

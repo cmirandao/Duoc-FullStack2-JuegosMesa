@@ -4,6 +4,22 @@ Todas las notas de los cambios notables de este proyecto serán documentadas en 
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto se adhiere al [Versionado Semántico](https://semver.org/lang/es/).
 
+## [1.1.1] - 2026-06-26
+
+### Añadido (Added)
+- **Documentación de Componentes:** Se agregó JSDoc consistente a múltiples componentes y servicios para mejorar la generación de documentación con Compodoc.
+
+### Cambiado (Changed)
+- **Validación de Credenciales:** Actualización de patrones de validación de email y contraseña en `RegistroComponent` para reforzar el control de datos y compatibilidad con el estándar de correo electrónico.
+- **Normalización de Tests:** Refactorización de comentarios de prueba a JSDoc en los archivos `.spec.ts`, mejorando la claridad y consistencia de la suite de pruebas.
+
+### Solucionado (Fixed)
+- **Corrige la validación de perfil:** Se agregó una verificación de formulario inválido en `PerfilComponent.onSubmit()` para evitar guardar cambios cuando el formulario no es válido.
+- **Pruebas unitarias:** Todos los tests pasan (`65 passed`) tras corregir el flujo de perfil inválido.
+
+### Eliminado (Removed)
+- Comentarios de prueba en estilo `//` en favor de bloques JSDoc consistentes en los archivos de tests.
+
 ## [1.1.0] - 2026-06-21
 
 ### Añadido (Added)

@@ -11,11 +11,16 @@ describe('DetalleComponent', () => {
   let component: DetalleComponent;
   let fixture: ComponentFixture<DetalleComponent>;
 
-  // Mocks de enrutamiento
+  /**
+   * @description Mock del Router para verificar rutas y redirecciones en DetalleComponent.
+   */
   const mockRouter = {
     navigate: vi.fn()
   };
 
+  /**
+   * @description Mock del ActivatedRoute para simular parámetros de URL en pruebas.
+   */
   const mockActivatedRoute = {
     snapshot: {
       paramMap: {
@@ -24,7 +29,9 @@ describe('DetalleComponent', () => {
     }
   };
 
-  // Mocks de servicios
+  /**
+   * @description Mock del JuegoService con datos de juego y reducción de stock.
+   */
   const mockJuegoService = {
     juegos: signal([
       { id: 1, nombre: 'Aventureros al Tren', stock: 3, precio: 45000 }
@@ -49,9 +56,7 @@ describe('DetalleComponent', () => {
       ]
     }).compileComponents();
 
-    /*
-    * Se debe configurar la URL (el ActivatedRoute) en cada prueba individualmente antes de que nazca el componente.
-    */
+    // Se debe configurar la URL (el ActivatedRoute) en cada prueba individualmente antes de que nazca el componente.
     fixture = TestBed.createComponent(DetalleComponent);
     component = fixture.componentInstance;
   });

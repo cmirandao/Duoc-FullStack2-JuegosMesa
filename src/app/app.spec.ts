@@ -8,13 +8,17 @@ describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   
-  // Usaremos un Subject para controlar y emitir eventos del Router manualmente
+  /**
+   * @description Subject que controla y emite eventos simulados del Router en las pruebas.
+   */
   let routerEventsSubject: Subject<any>;
 
   beforeEach(async () => {
     routerEventsSubject = new Subject<any>();
 
-    // Mock del Router exponiendo el Subject como un Observable
+    /**
+     * @description Mock del Router que expone el Subject como un Observable de eventos.
+     */
     const mockRouter = {
       events: routerEventsSubject.asObservable()
     };
@@ -25,8 +29,9 @@ describe('AppComponent', () => {
         { provide: Router, useValue: mockRouter }
       ]
     })
-    // Aislar el componente: Sobrescribimos el HTML para no renderizar <app-header> ni <router-outlet>.
-    // Esto evita que la prueba falle pidiendo los servicios que necesita el HeaderComponent.
+    /**
+     * @description Aisla el componente raíz sobrescribiendo su plantilla y evitando dependencias del HeaderComponent.
+     */
     .overrideComponent(AppComponent, {
       set: { template: '<div></div>' } 
     })
@@ -34,9 +39,9 @@ describe('AppComponent', () => {
 
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
-    
-    // No llamamos a fixture.detectChanges() aquí de forma deliberada
-    // para evitar que dependencias profundas de la vista interfieran con la lógica pura.
+    /**
+     * @description Evita la inicialización completa de la vista para probar solo la lógica de la clase.
+     */
   });
 
   // --- PRUEBA 1: Verificación de Montaje ---

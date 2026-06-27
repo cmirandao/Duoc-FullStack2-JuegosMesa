@@ -18,10 +18,14 @@ export class CatalogoComponent {
   authService = inject(AuthService);
   carroService = inject(CarritoService);
 
-  // Para mostrar mensajes de error y manejar el estado de la alerta en vez de usar alert
+  /**
+   * @description Mensaje de estado para el catálogo.
+   */
   alertaCatalogo = signal<{ tipo: 'success' | 'danger', mensaje: string } | null>(null);
 
-  // Mapeo de categorias a sus imagenes
+  /**
+   * @description Mapeo de categorías a nombre de imagen.
+   */
   categoriaConfig: Record<string, string> = {
     'Estrategia': 'cat_estrategia.png',
     'Familiar': 'cat_familiar.png',
@@ -29,29 +33,43 @@ export class CatalogoComponent {
     'Fiesta': 'cat_fiesta.png'
   };
 
-  /*
-  *  Obtenemos nombres unicos de forma reactiva iterando sobre el catalogo de juegos. 
-  * Actualiza automaticamente si cambia el inventario
-  */
+  /**
+   * @description Obtiene nombres únicos de categorías de forma reactiva.
+   * @returns Lista de categorías únicas en el catálogo.
+   */
   nombresCategorias = computed(() => {
     const lista = this.juegoService.juegos();
     return [...new Set(lista.map(j => j.categoria))];
   });
 
+  /**
+   * @description Genera un identificador HTML válido para una categoría.
+   * @param nombre Nombre de la categoría.
+   * @returns Identificador en minúsculas sin espacios.
+   */
   getId(nombre: string) { return nombre.toLowerCase().replace(' ', '-'); }
 
-  // Helper para obtener la imagen
+  /**
+   * @description Devuelve la ruta de imagen asociada a una categoría.
+   * @param nombre Nombre de la categoría.
+   * @returns Nombre de archivo de imagen.
+   */
   getImg(nombre: string) { return this.categoriaConfig[nombre] || 'default.png'; }
 
-  // Filtra juegos por categoria
+  /**
+   * @description Filtra el catálogo por categoría.
+   * @param cat Categoría de juego.
+   * @returns Lista de juegos que pertenecen a la categoría.
+   */
   juegosPorCategoria(cat: string) {
     const lista = this.juegoService.juegos();
     return lista.filter(j => j.categoria.trim() === cat.trim());
   }
-  /*
-  * Controlador de transacciones entre servicios
-  * Actualiza inventario y carrito de compras
-  */
+  /**
+   * @description Agrega un juego al carrito y actualiza el inventario del catálogo.
+   * @param juego Juego que se añadirá al carrito.
+   * @returns void
+   */
   agregarAlCarrito(juego: Juego) {
     if (juego.stock > 0) {
       this.juegoService.reducirStock(juego.id);
@@ -62,8 +80,11 @@ export class CatalogoComponent {
     }
   }
 
-  /*
-   * Muestra y oculta el mensaje de alerta
+  /**
+   * @description Muestra una alerta temporal en el catálogo.
+   * @param tipo Tipo visual de la alerta.
+   * @param mensaje Texto que se muestra en la alerta.
+   * @returns void
    */
   private mostrarAlerta(tipo: 'success' | 'danger', mensaje: string) {
     this.alertaCatalogo.set({ tipo, mensaje });

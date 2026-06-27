@@ -29,10 +29,9 @@ export const routes: Routes = [
     path: 'recuperar',
     loadComponent: () => import('./components/recuperar/recuperar.component').then(m => m.RecuperarComponent)
   },
-  /* 
-  * RUTAS PROTEGIDAS: No pueden acceder si no 
-  * estan logueados y sin el rol necesario 
-  */
+  /**
+   * @description Rutas protegidas que solo pueden acceder usuarios autenticados con el rol adecuado.
+   */
   {
     path: 'admin',
     canActivate: [adminGuard],

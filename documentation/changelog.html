@@ -1,0 +1,260 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>juegos-mesa documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="./" class="navbar-brand">juegos-mesa documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content changelog">
+                   <div class="content-data">
+
+
+
+<h1>Changelog</h1>
+<p>Todas las notas de los cambios notables de este proyecto serán documentadas en este archivo.
+El formato está basado en <a href="https://keepachangelog.com/es-ES/1.0.0/">Keep a Changelog</a>,
+y este proyecto se adhiere al <a href="https://semver.org/lang/es/">Versionado Semántico</a>.</p>
+<h2>[1.1.1] - 2026-06-26</h2>
+<h3>Añadido (Added)</h3>
+<ul>
+<li><strong>Documentación de Componentes:</strong> Se agregó JSDoc consistente a múltiples componentes y servicios para mejorar la generación de documentación con Compodoc.</li>
+</ul>
+<h3>Cambiado (Changed)</h3>
+<ul>
+<li><strong>Validación de Credenciales:</strong> Actualización de patrones de validación de email y contraseña en <code>RegistroComponent</code> para reforzar el control de datos y compatibilidad con el estándar de correo electrónico.</li>
+<li><strong>Normalización de Tests:</strong> Refactorización de comentarios de prueba a JSDoc en los archivos <code>.spec.ts</code>, mejorando la claridad y consistencia de la suite de pruebas.</li>
+</ul>
+<h3>Solucionado (Fixed)</h3>
+<ul>
+<li><strong>Corrige la validación de perfil:</strong> Se agregó una verificación de formulario inválido en <code>PerfilComponent.onSubmit()</code> para evitar guardar cambios cuando el formulario no es válido.</li>
+<li><strong>Pruebas unitarias:</strong> Todos los tests pasan (<code>65 passed</code>) tras corregir el flujo de perfil inválido.</li>
+</ul>
+<h3>Eliminado (Removed)</h3>
+<ul>
+<li>Comentarios de prueba en estilo <code>//</code> en favor de bloques JSDoc consistentes en los archivos de tests.</li>
+</ul>
+<h2>[1.1.0] - 2026-06-21</h2>
+<h3>Añadido (Added)</h3>
+<ul>
+<li><strong>Vista de Detalle de Producto:</strong> Nueva ruta dinámica (<code>detalle/:id</code>) para visualizar información individual de cada juego. Incluye un selector numérico de cantidad estrictamente vinculado a los límites de inventario y estandarización visual de imágenes mediante <code>object-fit</code>.</li>
+<li><strong>Notificaciones UI:</strong> Nuevo sistema global de alertas efímeras (Toasts) controladas mediante Angular Signals, reemplazando las ventanas bloqueantes del navegador.</li>
+<li><strong>SweetAlert2:</strong> Integración de modales interactivos para las acciones críticas de administración (ej. eliminación de juegos y confirmaciones).</li>
+<li><strong>Vitest:</strong> Implementación de un entorno de pruebas moderno, rápido y compatible con la arquitectura Zoneless de las nuevas versiones de Angular.</li>
+<li><strong>Testing Arquitectónico:</strong> Implementación completa de las pruebas unitarias a un modelo de &quot;Viaje en el tiempo&quot; nativo (<code>vi.useFakeTimers()</code>)</li>
+</ul>
+<h3>Cambiado (Changed)</h3>
+<ul>
+<li><strong>Refactorización de Servicios:</strong> Los servicios (<code>JuegoService</code>, <code>CarritoService</code>) ahora retornan objetos de estado lógico en lugar de interactuar directamente con el DOM, respetando el principio de responsabilidad única.</li>
+</ul>
+<h3>Solucionado (Fixed)</h3>
+<ul>
+<li><strong>Estilos del Botón de Pago:</strong> Agregada la pseudo-clase <code>:disabled</code> en SCSS para oscurecer y bloquear visualmente el botón cuando el carrito está vacío.</li>
+<li><strong>Inyección de Dependencias en Pruebas:</strong> Resuelto el error <code>NG0201 (No provider for ActivatedRoute)</code> aislando correctamente los componentes que utilizan <code>RouterLink</code>.</li>
+</ul>
+<h3>Eliminado (Removed)</h3>
+<ul>
+<li>Uso de <code>window.alert()</code> y <code>window.confirm()</code> en toda la aplicación para mejorar drásticamente la experiencia de usuario (UX).</li>
+<li>Dependencias legacy de Jasmine y Karma en favor del ecosistema Vite/Vitest.</li>
+</ul>
+<h2>[1.0.0] - 2026-06-14</h2>
+<h3>Añadido (Added)</h3>
+<ul>
+<li><strong>Arquitectura Angular:</strong> Implementación inicial del framework Angular usando Standalone Components, prescindiendo del uso de NgModules.</li>
+<li><strong>Formularios Reactivos (Reactive Forms):</strong> Nuevas validaciones síncronas y seguras para los componentes de Autenticación (Login, Registro, Recuperar) y Configuración de Cuenta (Perfil).</li>
+<li><strong>Sistema de Rutas (Routing):</strong> Implementación de navegación SPA (Single Page Application) con <em>Lazy Loading</em> (<code>loadComponent</code>) para optimizar los tiempos de carga inicial.</li>
+<li><strong>Functional Guards:</strong> Nuevos guardianes de ruta (<code>authGuard</code> y <code>adminGuard</code>) para proteger el acceso a las vistas de <code>/perfil</code> y <code>/admin</code> contra usuarios no autorizados.</li>
+</ul>
+<h3>Cambiado (Changed)</h3>
+<ul>
+<li><strong>Migración Core:</strong> Transición completa del proyecto original construido en HTML estático y Vanilla JS hacia un ecosistema de componentes de Angular.</li>
+<li><strong>Gestión de Estado (State Management):</strong> Refactorización del manejo de estados dinámicos (estado de sesión, apertura de menús, vistas del panel de control) utilizando <strong>Angular Signals</strong> para una reactividad más eficiente y un ciclo de detección de cambios optimizado.</li>
+<li><strong>Servicios y LocalStorage:</strong> Centralización de la lógica de negocio y persistencia de datos (Juegos, Carrito, Usuarios, Historial) a través de servicios inyectables (<code>JuegoService</code>, <code>CarritoService</code>, <code>AuthService</code>). Se eliminó la manipulación directa de <code>localStorage</code> desde las vistas.</li>
+<li><strong>Gestión de Estilos:</strong> Centralización de la hoja de estilos en el archivo global <code>styles.scss</code>, aprovechando las variables de preprocesador para mantener consistencia en la paleta de colores, tipografías y el diseño a lo largo de todos los componentes.</li>
+</ul>
+<h3>Eliminado (Removed)</h3>
+<ul>
+<li>Manipulación directa del DOM (ej. <code>document.getElementById()</code>, <code>classList.add()</code>) a favor de las directivas declarativas de Angular (<code>@if</code>, <code>@for</code>, <code>[class]</code>).</li>
+<li>Archivos <code>.js</code> heredados y redundantes de la versión anterior que acoplaban la lógica visual con las reglas de negocio.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'changelog';
+            var COMPODOC_CURRENT_PAGE_URL = 'changelog.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+
+       <script src="./js/menu-wc.js" defer></script>
+       <script nomodule src="./js/menu-wc_es5.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

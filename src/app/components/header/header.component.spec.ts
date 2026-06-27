@@ -9,13 +9,16 @@ describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
 
-  // Subject para poder emitir eventos de navegacion "falsos" a voluntad
+  /**
+   * @description Subject para emitir eventos de navegación simulados en pruebas.
+   */
   let routerEventsSubject: Subject<any>;
 
+  /**
+   * @description Mock del Router con URL inicial y eventos de navegación.
+   */
   const mockRouter = {
-    // Ruta por defecto al iniciar el componente
     url: '/',
-    // Se inicializara en el beforeEach
     events: null as any,
     navigate: vi.fn()
   };
@@ -30,7 +33,9 @@ describe('HeaderComponent', () => {
     vi.clearAllMocks();
     routerEventsSubject = new Subject<any>();
 
-    // Conectar el Subject al Mock del Router
+    /**
+     * @description Conecta el Subject de eventos al Mock del Router para simular navegación.
+     */
     mockRouter.events = routerEventsSubject.asObservable();
 
     await TestBed.configureTestingModule({

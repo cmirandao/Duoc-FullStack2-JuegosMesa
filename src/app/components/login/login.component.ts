@@ -15,7 +15,9 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  // Para mostrar mensajes de error en vez de usar alert
+  /**
+   * @description Señal para mostrar mensajes de error en el formulario de login.
+   */
   mensajeError = signal<string | null>(null);
 
   loginForm: FormGroup = this.fb.group({
@@ -23,6 +25,10 @@ export class LoginComponent {
     password: ['', Validators.required]
   });
 
+  /**
+   * @description Valida el ingreso del usuario y redirige según su rol.
+   * @returns void
+   */
   onSubmit() {
     if (this.loginForm.invalid) return;
 
@@ -40,9 +46,7 @@ export class LoginComponent {
       return;
     }
 
-    /*
-    *  Iniciar sesion usando el servicio para emitir el cambio a toda la aplicacion
-    */
+    // Iniciar sesion usando el servicio para emitir el cambio a toda la aplicacion
     this.mensajeError.set(null);
     this.authService.login(usuario);
 

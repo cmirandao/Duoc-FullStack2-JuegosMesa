@@ -4,20 +4,20 @@ import { Juego } from '../../models/juego.model';
 
 @Injectable({ providedIn: 'root' })
 export class JuegoService {
-  /* 
-  * Inyeccion de PLATFORM_ID para verificar si se esta o no en el navegador (Evita errores de SSR)
-  */
+  /**
+   * @description Identifica si el código se ejecuta en el navegador o en SSR.
+   */
   private platformId = inject(PLATFORM_ID);
-  /*
-  * Estado reactivo privado y su version read only publica 
-  */
+  /**
+   * @description Estado reactivo interno para gestionar el catálogo de juegos.
+   */
   private _juegos = signal<Juego[]>([]);
   juegos = this._juegos.asReadonly();
 
   constructor() {
-    /*
-    * afterNextRender garantiza que el codigo de localStorage solo se ejecuta en el browser
-    */
+    /**
+     * @description afterNextRender garantiza que el código de localStorage se ejecute solo en el browser.
+     */
     afterNextRender(() => {
       const guardados = localStorage.getItem('juegos');
 
@@ -33,8 +33,9 @@ export class JuegoService {
       }
     });
   }
-  /*
-   * Carga el catálogo por defecto la primera vez que se inicia la app
+  /**
+   * @description Carga el catálogo por defecto la primera vez que se inicia la app.
+   * @returns void
    */
   private inicializarDatos() {
     const iniciales = this.obtenerJuegosIniciales().map((j, i) => ({ ...j, id: i + 1 }));
@@ -42,31 +43,42 @@ export class JuegoService {
     this.persistir();
   }
 
-  /*
-  * Sincroniza el estado del signal con el localStorage 
-  */
+  /**
+   * @description Sincroniza el estado del signal con el localStorage.
+   * @returns void
+   */
   private persistir() {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('juegos', JSON.stringify(this._juegos()));
     }
   }
 
-  /*
-  * Control de stock 
-  */
+  /**
+   * @description Reduce en 1 el stock del juego identificado.
+   * @param id Identificador del juego.
+   * @returns void
+   */
   reducirStock(id: number) {
     this._juegos.update(lista => lista.map(j => j.id === id ? { ...j, stock: j.stock - 1 } : j));
     this.persistir();
   }
+  /**
+   * @description Aumenta el stock de un juego en la cantidad indicada.
+   * @param id Identificador del juego.
+   * @param cantidad Cantidad de stock a sumar.
+   * @returns void
+   */
   aumentarStock(id: number, cantidad: number = 1) {
     this._juegos.update(lista => lista.map(j => 
       j.id === id ? { ...j, stock: j.stock + cantidad } : j
     ));
     this.persistir();
   }
-  /* 
-   * Modifica el stock global y actualiza el carrito en localStorage 
-  */
+  /**
+   * @description Agrega un juego al carrito si hay stock disponible y actualiza el inventario.
+   * @param id Identificador del juego.
+   * @returns Objeto con estado y mensaje del intento.
+   */
   agregarAlCarrito(id: number) {
     const juego = this._juegos().find(j => j.id === id);
 
@@ -88,15 +100,18 @@ export class JuegoService {
       return { exito: false, mensaje: "Lo sentimos, no hay stock disponible." };
     }
   }
-  /*
-  * Elimina un juego del inventario (con todo su stock)
-  */
+  /**
+   * @description Elimina completamente un juego del catálogo.
+   * @param id Identificador del juego a eliminar.
+   * @returns void
+   */
   eliminarJuego(id: number) {
     this._juegos.update(lista => lista.filter(j => j.id !== id));
     this.persistir();
   }
-  /*
-   * Inventario de juegos inicial
+  /**
+   * @description Devuelve el inventario base de juegos iniciales.
+   * @returns Lista de juegos sin campo id.
    */
   private obtenerJuegosIniciales(): Omit<Juego, 'id'>[] {
     return [

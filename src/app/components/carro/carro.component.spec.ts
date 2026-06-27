@@ -8,8 +8,14 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 describe('CarroComponent', () => {
   let component: CarroComponent;
   let fixture: ComponentFixture<CarroComponent>;
-  // Mocks de Signals para simular el estado de la aplicación
+  /**
+   * @description Mock del Router usado por el componente Carro para probar la navegación.
+   */
   const mockRouter = { navigate: vi.fn() };
+
+  /**
+   * @description Mock del CarritoService, con signals y método de pago.
+   */
   const mockCarritoService = {
     procesarPago: vi.fn(),
     itemsAgrupados: signal([]),
@@ -18,9 +24,10 @@ describe('CarroComponent', () => {
   };
 
   beforeEach(async () => {
-    // Limpieza de mocks antes de cada prueba
     vi.clearAllMocks();
-    // Vitest que toma el control del tiempo antes de montar el componente
+    /**
+     * @description Configura Vitest para el control de temporizadores durante las pruebas.
+     */
     vi.useFakeTimers();
 
     await TestBed.configureTestingModule({

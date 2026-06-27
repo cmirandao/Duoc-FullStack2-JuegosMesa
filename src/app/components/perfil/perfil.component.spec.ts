@@ -8,13 +8,17 @@ describe('PerfilComponent', () => {
   let component: PerfilComponent;
   let fixture: ComponentFixture<PerfilComponent>;
 
-  // Mocks de Servicio
+  /**
+   * @description Mock del AuthService que provee el usuario actual y simula el login.
+   */
   const mockAuthService = {
     usuarioActual: vi.fn(),
     login: vi.fn()
   };
 
-  // Datos de prueba
+  /**
+   * @description Usuario de prueba para los escenarios de cliente en PerfilComponent.
+   */
   const usuarioClienteMock = {
     username: 'juan',
     email: 'juan@sev.cl',
@@ -24,7 +28,9 @@ describe('PerfilComponent', () => {
     password: 'PasswordAntigua123!'
   };
 
-  // Mock admin maestro
+  /**
+   * @description Usuario administrador de prueba para verificar bloqueos de edición en PerfilComponent.
+   */
   const usuarioAdminMock = {
     username: 'admin',
     email: 'admin@sev.cl',
@@ -34,7 +40,9 @@ describe('PerfilComponent', () => {
   beforeEach(async () => {
     vi.clearAllMocks();
     
-    // Vitest que toma el control del tiempo antes de montar el componente
+    /**
+     * @description Configura Vitest para controlar el tiempo en pruebas de PerfilComponent.
+     */
     vi.useFakeTimers();
 
     await TestBed.configureTestingModule({

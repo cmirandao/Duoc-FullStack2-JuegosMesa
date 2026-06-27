@@ -9,18 +9,23 @@ describe('RegistroComponent', () => {
   let component: RegistroComponent;
   let fixture: ComponentFixture<RegistroComponent>;
 
-  // Mocks
+  /**
+   * @description Mock del Router que captura la navegación tras el registro.
+   */
   const mockRouter = {
     navigate: vi.fn()
   };
 
+  /**
+   * @description Mock del AuthService utilizado para simular el registro de usuarios.
+   */
   const mockAuthService = {
     registrarUsuario: vi.fn()
   };
 
   beforeEach(async () => {
     vi.clearAllMocks();
-    
+
     // Indicar a Vitest que tome el control del reloj
     vi.useFakeTimers();
 
@@ -29,8 +34,10 @@ describe('RegistroComponent', () => {
       providers: [
         { provide: AuthService, useValue: mockAuthService },
         { provide: Router, useValue: mockRouter },
-        // Previene el error NG0201 inyectando una ruta falsa para los RouterLinks del HTML
-        { provide: ActivatedRoute, useValue: {} } 
+        /**
+         * @description Mock de ActivatedRoute para evitar errores de RouterLink sin renderizar rutas reales.
+         */
+        { provide: ActivatedRoute, useValue: {} }
       ]
     }).compileComponents();
 
@@ -47,7 +54,7 @@ describe('RegistroComponent', () => {
   it('Deberia inicializar el formulario con todos sus campos vacios e invalido', () => {
     expect(component).toBeTruthy();
     expect(component.registroForm.invalid).toBe(true);
-    
+
     // Verificar que los campos obligatorios nazcan limpios
     const formValues = component.registroForm.value;
     expect(formValues.nombre).toBe('');
@@ -57,11 +64,11 @@ describe('RegistroComponent', () => {
 
   it('Deberia invalidar la fecha de nacimiento si el usuario es menor de 13 años', () => {
     const fechaControl = component.registroForm.get('fechaNacimiento');
-    
+
     // Calcular una fecha que represente exactamente 10 años atrás
     const hoy = new Date();
     const fechaMenor = new Date(hoy.getFullYear() - 10, hoy.getMonth(), hoy.getDate());
-    
+
     // Formatear a YYYY-MM-DD para el input de tipo date
     const fechaString = fechaMenor.toISOString().split('T')[0];
     fechaControl?.setValue(fechaString);
@@ -71,7 +78,7 @@ describe('RegistroComponent', () => {
 
   it('Deberia validar la fecha de nacimiento si el usuario tiene 13 años o más', () => {
     const fechaControl = component.registroForm.get('fechaNacimiento');
-    
+
     // Calcular una fecha de hace 20 años
     const hoy = new Date();
     const fechaMayor = new Date(hoy.getFullYear() - 20, hoy.getMonth(), hoy.getDate());
@@ -97,13 +104,13 @@ describe('RegistroComponent', () => {
 
   it('Deberia rechazar contraseñas debiles (falta mayuscula, numero o simbolo)', () => {
     const passwordControl = component.registroForm.get('password');
-    
+
     passwordControl?.setValue('solominusculas123');
     expect(passwordControl?.errors?.['pattern']).toBeTruthy();
 
     passwordControl?.setValue('SOLOMAYUSCULAS123');
     expect(passwordControl?.errors?.['pattern']).toBeTruthy();
-    
+
     // Contraseña valida
     passwordControl?.setValue('PasswordFuerte_123');
     expect(passwordControl?.errors?.['pattern']).toBeUndefined();
@@ -133,9 +140,9 @@ describe('RegistroComponent', () => {
     component.onSubmit();
 
     // Assert
-    expect(component.alertaGlobal()).toEqual({ 
-      tipo: 'danger', 
-      mensaje: 'Error: Este correo electrónico ya se encuentra registrado.' 
+    expect(component.alertaGlobal()).toEqual({
+      tipo: 'danger',
+      mensaje: 'Error: Este correo electrónico ya se encuentra registrado.'
     });
     expect(mockRouter.navigate).not.toHaveBeenCalled();
   });
@@ -170,9 +177,9 @@ describe('RegistroComponent', () => {
     });
 
     // Assert 2: Alerta visual de exito instanciada
-    expect(component.alertaGlobal()).toEqual({ 
-      tipo: 'success', 
-      mensaje: '¡Registro exitoso! Redirigiendo al login...' 
+    expect(component.alertaGlobal()).toEqual({
+      tipo: 'success',
+      mensaje: '¡Registro exitoso! Redirigiendo al login...'
     });
 
     // Avance de tiempo nativo de Vitest
@@ -193,5 +200,15 @@ describe('RegistroComponent', () => {
     // Assert
     expect(component.registroForm.value.nombre).toBeNull();
     expect(component.alertaGlobal()).toBeNull();
+  });
+
+  it('Deberia invalidar el formulario si el formato del correo es incorrecto', () => {
+    const emailControl = component.registroForm.get('email');
+
+    emailControl?.setValue('erronenemail@dominio');
+
+    // Verificar que tenga el formato nombre@dominio.extension con 'pattern'
+    expect(emailControl?.errors?.['pattern']).toBeTruthy();
+    expect(component.registroForm.invalid).toBe(true);
   });
 });

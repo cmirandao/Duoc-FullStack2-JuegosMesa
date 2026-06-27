@@ -1,0 +1,1275 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>juegos-mesa documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">juegos-mesa documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  AdminComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/components/admin/admin.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-admin</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                                <code><a href="https://angular.io/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./admin.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#authService" >authService</a>
+                            </li>
+                            <li>
+                                <a href="#esAdminMaestro" >esAdminMaestro</a>
+                            </li>
+                            <li>
+                                <a href="#juegoService" >juegoService</a>
+                            </li>
+                            <li>
+                                <a href="#mensaje" >mensaje</a>
+                            </li>
+                            <li>
+                                <a href="#stockBajo" >stockBajo</a>
+                            </li>
+                            <li>
+                                <a href="#totalUsuarios" >totalUsuarios</a>
+                            </li>
+                            <li>
+                                <a href="#usuarios" >usuarios</a>
+                            </li>
+                            <li>
+                                <a href="#vistaActual" >vistaActual</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#alertaProximamente" >alertaProximamente</a>
+                            </li>
+                            <li>
+                                <a href="#eliminarJuego" >eliminarJuego</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#mostrarAlerta" >mostrarAlerta</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#toggleRol" >toggleRol</a>
+                            </li>
+                            <li>
+                                <a href="#toggleVista" >toggleVista</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="alertaProximamente"></a>
+                    <span class="name">
+                        <span ><b>alertaProximamente</b></span>
+                        <a href="#alertaProximamente"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>alertaProximamente()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="84"
+                                    class="link-to-prism">src/app/components/admin/admin.ts:84</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="eliminarJuego"></a>
+                    <span class="name">
+                        <span ><b>eliminarJuego</b></span>
+                        <a href="#eliminarJuego"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>eliminarJuego(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="40"
+                                    class="link-to-prism">src/app/components/admin/admin.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mostrarAlerta"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>mostrarAlerta</b></span>
+                        <a href="#mostrarAlerta"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>mostrarAlerta(tipo: "success" | "danger", mensaje: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="88"
+                                    class="link-to-prism">src/app/components/admin/admin.ts:88</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>tipo</td>
+                                            <td>
+                                                        <code>&quot;success&quot; | &quot;danger&quot;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>mensaje</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="31"
+                                    class="link-to-prism">src/app/components/admin/admin.ts:31</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleRol"></a>
+                    <span class="name">
+                        <span ><b>toggleRol</b></span>
+                        <a href="#toggleRol"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleRol(username: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="66"
+                                    class="link-to-prism">src/app/components/admin/admin.ts:66</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>username</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleVista"></a>
+                    <span class="name">
+                        <span ><b>toggleVista</b></span>
+                        <a href="#toggleVista"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleVista(vista: "inventario" | "usuarios")</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="36"
+                                    class="link-to-prism">src/app/components/admin/admin.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>vista</td>
+                                            <td>
+                                                        <code>&quot;inventario&quot; | &quot;usuarios&quot;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="authService"></a>
+                    <span class="name">
+                        <span ><b>authService</b></span>
+                        <a href="#authService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(AuthService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/components/admin/admin.ts:16</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="esAdminMaestro"></a>
+                    <span class="name">
+                        <span ><b>esAdminMaestro</b></span>
+                        <a href="#esAdminMaestro"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>computed(() &#x3D;&gt; this.authService.usuarioActual()?.email &#x3D;&#x3D;&#x3D; &#x27;admin@sev.cl&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/components/admin/admin.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="juegoService"></a>
+                    <span class="name">
+                        <span ><b>juegoService</b></span>
+                        <a href="#juegoService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(JuegoService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/components/admin/admin.ts:15</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mensaje"></a>
+                    <span class="name">
+                        <span ><b>mensaje</b></span>
+                        <a href="#mensaje"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;{ tipo: &#x27;success&#x27; | &#x27;danger&#x27;, mensaje: string } | null&gt;(null)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/components/admin/admin.ts:22</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="stockBajo"></a>
+                    <span class="name">
+                        <span ><b>stockBajo</b></span>
+                        <a href="#stockBajo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>computed(() &#x3D;&gt; this.juegoService.juegos().filter(j &#x3D;&gt; j.stock &lt; 5).length)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/components/admin/admin.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="totalUsuarios"></a>
+                    <span class="name">
+                        <span ><b>totalUsuarios</b></span>
+                        <a href="#totalUsuarios"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>computed(() &#x3D;&gt; this.usuarios().length)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/components/admin/admin.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="usuarios"></a>
+                    <span class="name">
+                        <span ><b>usuarios</b></span>
+                        <a href="#usuarios"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;any[]&gt;([])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/components/admin/admin.ts:20</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="vistaActual"></a>
+                    <span class="name">
+                        <span ><b>vistaActual</b></span>
+                        <a href="#vistaActual"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;&#x27;inventario&#x27; | &#x27;usuarios&#x27;&gt;(&#x27;inventario&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/components/admin/admin.ts:19</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, computed, inject, signal, OnInit } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { JuegoService } from &#x27;../../services/JuegoService/juego-service&#x27;;
+import { AuthService } from &#x27;../../services/AuthService/auth-service&#x27;;
+// Para reemplazar los windows.confirm por algo mas estetico
+import Swal from &#x27;sweetalert2&#x27;;
+
+@Component({
+  selector: &#x27;app-admin&#x27;,
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: &#x27;./admin.html&#x27;
+})
+export class AdminComponent implements OnInit {
+  juegoService &#x3D; inject(JuegoService);
+  authService &#x3D; inject(AuthService);
+
+  // Alternar paneles de administracion
+  vistaActual &#x3D; signal&lt;&#x27;inventario&#x27; | &#x27;usuarios&#x27;&gt;(&#x27;inventario&#x27;);
+  usuarios &#x3D; signal&lt;any[]&gt;([]);
+  // Para mostrar mensajes de error en vez de usar alert
+  mensaje &#x3D; signal&lt;{ tipo: &#x27;success&#x27; | &#x27;danger&#x27;, mensaje: string } | null&gt;(null);
+
+  // Calculo de KPIs del dashboard de administrador
+  stockBajo &#x3D; computed(() &#x3D;&gt; this.juegoService.juegos().filter(j &#x3D;&gt; j.stock &lt; 5).length);
+  totalUsuarios &#x3D; computed(() &#x3D;&gt; this.usuarios().length);
+
+  // Verificacion si es Admin Maestro
+  esAdminMaestro &#x3D; computed(() &#x3D;&gt; this.authService.usuarioActual()?.email &#x3D;&#x3D;&#x3D; &#x27;admin@sev.cl&#x27;);
+
+  ngOnInit() {
+    // Al cargar el componente, obtenemos la lista de usuarios desde el servicio
+    this.usuarios.set(this.authService.obtenerUsuarios());
+  }
+
+  toggleVista(vista: &#x27;inventario&#x27; | &#x27;usuarios&#x27;) {
+    this.vistaActual.set(vista);
+  }
+  // Elimina un juego junto a todo su stock
+  eliminarJuego(id: number) {
+    Swal.fire({
+      title: &#x27;¿Estás seguro?&#x27;,
+      text: &#x60;Estás a punto de eliminar el juego #${id} y todo su stock. ¡Esta acción no se puede deshacer!&#x60;,
+      icon: &#x27;warning&#x27;,
+      showCancelButton: true,
+      confirmButtonColor: &#x27;#c0392b&#x27;,
+      cancelButtonColor: &#x27;#6c757d&#x27;,
+      confirmButtonText: &#x27;Sí, eliminar&#x27;,
+      cancelButtonText: &#x27;Cancelar&#x27;,
+      reverseButtons: true
+    }).then((result) &#x3D;&gt; {
+      // Esta promesa se resuelve cuando el usuario hace clic en algun boton
+      if (result.isConfirmed) {
+        this.juegoService.eliminarJuego(id);
+        // Mostrar mensaje de exito
+        Swal.fire(
+          &#x27;¡Eliminado!&#x27;,
+          &#x27;El juego ha sido borrado del inventario.&#x27;,
+          &#x27;success&#x27;
+        );
+      }
+    });
+  }
+
+  // Logica para cambiar roles (Solo Admin Maestro)
+  toggleRol(username: string) {
+    // Doble validación de seguridad
+    if (!this.esAdminMaestro()) return;
+
+    // Actualizacion de la lista
+    const listaActualizada &#x3D; this.usuarios().map(u &#x3D;&gt; {
+      // Evitar que el admin maestro se cambie el rol a si mismo por error
+      if (u.username &#x3D;&#x3D;&#x3D; username &amp;&amp; u.email !&#x3D;&#x3D; &#x27;admin@sev.cl&#x27;) {
+        return { ...u, rol: u.rol &#x3D;&#x3D;&#x3D; &#x27;admin&#x27; ? &#x27;cliente&#x27; : &#x27;admin&#x27; };
+      }
+      return u;
+    });
+
+    // Guardamos en la Signal y en el LocalStorage
+    this.usuarios.set(listaActualizada);
+    localStorage.setItem(&#x27;usuariosRegistrados&#x27;, JSON.stringify(listaActualizada));
+  }
+
+  alertaProximamente() {
+    this.mostrarAlerta(&#x27;danger&#x27;, &#x27;Próximamente...&#x27;);
+  }
+
+  private mostrarAlerta(tipo: &#x27;success&#x27; | &#x27;danger&#x27;, mensaje: string) {
+    this.mensaje.set({ tipo, mensaje });
+    setTimeout(() &#x3D;&gt; {
+      this.mensaje.set(null);
+    }, 3000);
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;main class&#x3D;&quot;container py-4 flex-grow-1&quot;&gt;
+
+  &lt;div class&#x3D;&quot;d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3&quot;&gt;
+    &lt;h2&gt;Panel de Control&lt;/h2&gt;
+    &lt;p class&#x3D;&quot;text-muted mb-0&quot;&gt;Bienvenido, &lt;strong&gt;{{ authService.usuarioActual()?.nombre }}&lt;/strong&gt;&lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;div class&#x3D;&quot;row g-4 mb-5&quot;&gt;
+    &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+      &lt;div class&#x3D;&quot;tarjeta tarjeta-stat p-3 d-flex align-items-center justify-content-between&quot;&gt;
+        &lt;div class&#x3D;&quot;text-center w-100&quot;&gt;
+          &lt;p class&#x3D;&quot;text-muted mb-1 small text-uppercase fw-bold&quot;&gt;Ventas del mes anterior&lt;/p&gt;
+          &lt;h3 class&#x3D;&quot;mb-0 fs-2&quot;&gt;$450.000&lt;/h3&gt;
+        &lt;/div&gt;
+        &lt;span class&#x3D;&quot;material-symbols-outlined fs-1&quot;&gt;payments&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+      &lt;div class&#x3D;&quot;tarjeta tarjeta-stat borde-exito p-3 d-flex align-items-center justify-content-between&quot;&gt;
+        &lt;div class&#x3D;&quot;text-center w-100&quot;&gt;
+          &lt;p class&#x3D;&quot;text-muted mb-1 small text-uppercase fw-bold&quot;&gt;Usuarios Registrados&lt;/p&gt;
+          &lt;h3 class&#x3D;&quot;mb-0 fs-2&quot;&gt;{{ totalUsuarios() }}&lt;/h3&gt;
+        &lt;/div&gt;
+        &lt;span class&#x3D;&quot;material-symbols-outlined fs-1&quot;&gt;group&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+      &lt;div class&#x3D;&quot;tarjeta tarjeta-stat borde-alerta p-3 d-flex align-items-center justify-content-between&quot;&gt;
+        &lt;div class&#x3D;&quot;text-center w-100&quot;&gt;
+          &lt;p class&#x3D;&quot;text-muted mb-1 small text-uppercase fw-bold&quot;&gt;Stock Bajo&lt;/p&gt;
+          &lt;h3 class&#x3D;&quot;mb-0 fs-2&quot;&gt;{{ stockBajo() }}&lt;/h3&gt;
+        &lt;/div&gt;
+        &lt;span class&#x3D;&quot;material-symbols-outlined fs-1&quot;&gt;inventory_2&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class&#x3D;&quot;mb-4 d-flex gap-2&quot;&gt;
+    &lt;button (click)&#x3D;&quot;toggleVista(&#x27;inventario&#x27;)&quot; class&#x3D;&quot;btn-enviar&quot;
+      [ngClass]&#x3D;&quot;vistaActual() &#x3D;&#x3D;&#x3D; &#x27;inventario&#x27; ? &#x27;btn-primary&#x27; : &#x27;btn-outline-primary&#x27;&quot;&gt;Inventario&lt;/button&gt;
+    &lt;button (click)&#x3D;&quot;toggleVista(&#x27;usuarios&#x27;)&quot; class&#x3D;&quot;btn-enviar&quot;
+      [ngClass]&#x3D;&quot;vistaActual() &#x3D;&#x3D;&#x3D; &#x27;usuarios&#x27; ? &#x27;btn-primary&#x27; : &#x27;btn-outline-primary&#x27;&quot;&gt;Usuarios&lt;/button&gt;
+    @if (mensaje(); as alerta) {
+    &lt;div
+      class&#x3D;&quot;alert alert-{{ alerta.tipo }} d-flex align-items-center position-fixed top-0 start-50 translate-middle-x mt-4 shadow&quot;
+      style&#x3D;&quot;z-index: 1050; width: 90%; max-width: 600px;&quot; role&#x3D;&quot;alert&quot;&gt;
+      &lt;span class&#x3D;&quot;material-symbols-outlined me-2&quot;&gt;
+        upcoming
+      &lt;/span&gt;
+      &lt;div&gt;{{ alerta.mensaje }}&lt;/div&gt;
+    &lt;/div&gt;
+    }
+  &lt;/div&gt;
+
+  @if (vistaActual() &#x3D;&#x3D;&#x3D; &#x27;inventario&#x27;) {
+  &lt;div class&#x3D;&quot;registro-contenedor&quot;&gt;
+    &lt;div class&#x3D;&quot;d-flex justify-content-between align-items-center mb-3 flex-wrap gap-3&quot;&gt;
+      &lt;h4 class&#x3D;&quot;mb-0 text-secondary&quot;&gt;Gestión de Inventario&lt;/h4&gt;
+      &lt;button class&#x3D;&quot;btn-enviar d-flex align-items-center gap-1 btn-sm&quot; (click)&#x3D;&quot;alertaProximamente()&quot;&gt;
+        &lt;span class&#x3D;&quot;material-symbols-outlined fs-6&quot;&gt;add&lt;/span&gt; Añadir Juego
+      &lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;table-responsive&quot;&gt;
+      &lt;table class&#x3D;&quot;table table-hover align-middle tabla-admin&quot;&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th&gt;ID&lt;/th&gt;
+            &lt;th&gt;Nombre del Juego&lt;/th&gt;
+            &lt;th&gt;Categoría&lt;/th&gt;
+            &lt;th&gt;Precio&lt;/th&gt;
+            &lt;th&gt;Stock&lt;/th&gt;
+            &lt;th class&#x3D;&quot;text-center&quot;&gt;Acciones&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+          @for (juego of juegoService.juegos(); track juego.id) {
+          &lt;tr&gt;
+            &lt;td&gt;#{{ juego.id }}&lt;/td&gt;
+            &lt;td class&#x3D;&quot;fw-bold&quot;&gt;{{ juego.nombre }}&lt;/td&gt;
+            &lt;td&gt;{{ juego.categoria }}&lt;/td&gt;
+            &lt;td&gt;{{ juego.precio | currency: &#x27;CLP&#x27;: &#x27;symbol&#x27;: &#x27;1.0-0&#x27; }}&lt;/td&gt;
+            &lt;td&gt;&lt;span class&#x3D;&quot;badge&quot; [ngClass]&#x3D;&quot;juego.stock &lt; 5 ? &#x27;bg-danger&#x27; : &#x27;bg-success&#x27;&quot;&gt;{{ juego.stock }}&lt;/span&gt;
+            &lt;/td&gt;
+            &lt;td class&#x3D;&quot;text-center&quot;&gt;
+              &lt;button class&#x3D;&quot;btn btn-sm btn-outline-danger&quot; (click)&#x3D;&quot;eliminarJuego(juego.id)&quot; title&#x3D;&quot;Eliminar Item&quot;&gt;
+                &lt;span class&#x3D;&quot;material-symbols-outlined fs-6&quot;&gt;delete&lt;/span&gt;
+              &lt;/button&gt;
+            &lt;/td&gt;
+          &lt;/tr&gt;
+          } @empty {
+          &lt;tr&gt;
+            &lt;td colspan&#x3D;&quot;6&quot; class&#x3D;&quot;text-center&quot;&gt;No hay juegos registrados.&lt;/td&gt;
+          &lt;/tr&gt;
+          }
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  }
+
+  @if (vistaActual() &#x3D;&#x3D;&#x3D; &#x27;usuarios&#x27;) {
+  &lt;div class&#x3D;&quot;registro-contenedor&quot;&gt;
+    &lt;div class&#x3D;&quot;d-flex justify-content-between align-items-center mb-3 flex-wrap gap-3&quot;&gt;
+      &lt;h4 class&#x3D;&quot;mb-0 text-secondary&quot;&gt;Gestión de Usuarios&lt;/h4&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;table-responsive&quot;&gt;
+      &lt;table class&#x3D;&quot;table table-hover align-middle tabla-usuarios&quot;&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th&gt;Nombre&lt;/th&gt;
+            &lt;th&gt;Usuario&lt;/th&gt;
+            &lt;th&gt;Email&lt;/th&gt;
+            &lt;th class&#x3D;&quot;text-center&quot;&gt;Rol&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+          @for (u of usuarios(); track u.username) {
+          &lt;tr&gt;
+            &lt;td&gt;{{ u.nombre }}&lt;/td&gt;
+            &lt;td&gt;{{ u.username }}&lt;/td&gt;
+            &lt;td&gt;{{ u.email }}&lt;/td&gt;
+            &lt;td class&#x3D;&quot;text-center&quot;&gt;
+
+              @if (esAdminMaestro()) {
+              &lt;button class&#x3D;&quot;btn btn-sm text-white&quot; [ngClass]&#x3D;&quot;u.rol &#x3D;&#x3D;&#x3D; &#x27;admin&#x27; ? &#x27;bg-danger&#x27; : &#x27;bg-success&#x27;&quot;
+                (click)&#x3D;&quot;toggleRol(u.username)&quot; [disabled]&#x3D;&quot;u.email &#x3D;&#x3D;&#x3D; &#x27;admin@sev.cl&#x27;&quot;&gt;
+                {{ u.rol &#x3D;&#x3D;&#x3D; &#x27;admin&#x27; ? &#x27;Admin&#x27; : &#x27;Cliente&#x27; }}
+              &lt;/button&gt;
+              } @else {
+              &lt;span class&#x3D;&quot;badge&quot; [ngClass]&#x3D;&quot;u.rol &#x3D;&#x3D;&#x3D; &#x27;admin&#x27; ? &#x27;bg-danger&#x27; : &#x27;bg-success&#x27;&quot;&gt;
+                {{ u.rol &#x3D;&#x3D;&#x3D; &#x27;admin&#x27; ? &#x27;Admin&#x27; : &#x27;Cliente&#x27; }}
+              &lt;/span&gt;
+              }
+
+            &lt;/td&gt;
+          &lt;/tr&gt;
+          } @empty {
+          &lt;tr&gt;
+            &lt;td colspan&#x3D;&quot;4&quot; class&#x3D;&quot;text-center&quot;&gt;No hay usuarios registrados.&lt;/td&gt;
+          &lt;/tr&gt;
+          }
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  }
+&lt;/main&gt;</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><main class="container py-4 flex-grow-1">  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">    <h2>Panel de Control</h2>    <p class="text-muted mb-0">Bienvenido, <strong>{{ authService.usuarioActual()?.nombre }}</strong></p>  </div>  <div class="row g-4 mb-5">    <div class="col-12 col-md-4">      <div class="tarjeta tarjeta-stat p-3 d-flex align-items-center justify-content-between">        <div class="text-center w-100">          <p class="text-muted mb-1 small text-uppercase fw-bold">Ventas del mes anterior</p>          <h3 class="mb-0 fs-2">$450.000</h3>        </div>        <span class="material-symbols-outlined fs-1">payments</span>      </div>    </div>    <div class="col-12 col-md-4">      <div class="tarjeta tarjeta-stat borde-exito p-3 d-flex align-items-center justify-content-between">        <div class="text-center w-100">          <p class="text-muted mb-1 small text-uppercase fw-bold">Usuarios Registrados</p>          <h3 class="mb-0 fs-2">{{ totalUsuarios() }}</h3>        </div>        <span class="material-symbols-outlined fs-1">group</span>      </div>    </div>    <div class="col-12 col-md-4">      <div class="tarjeta tarjeta-stat borde-alerta p-3 d-flex align-items-center justify-content-between">        <div class="text-center w-100">          <p class="text-muted mb-1 small text-uppercase fw-bold">Stock Bajo</p>          <h3 class="mb-0 fs-2">{{ stockBajo() }}</h3>        </div>        <span class="material-symbols-outlined fs-1">inventory_2</span>      </div>    </div>  </div>  <div class="mb-4 d-flex gap-2">    <button (click)="toggleVista(\'inventario\')" class="btn-enviar"      [ngClass]="vistaActual() === \'inventario\' ? \'btn-primary\' : \'btn-outline-primary\'">Inventario</button>    <button (click)="toggleVista(\'usuarios\')" class="btn-enviar"      [ngClass]="vistaActual() === \'usuarios\' ? \'btn-primary\' : \'btn-outline-primary\'">Usuarios</button>    @if (mensaje(); as alerta) {    <div      class="alert alert-{{ alerta.tipo }} d-flex align-items-center position-fixed top-0 start-50 translate-middle-x mt-4 shadow"      style="z-index: 1050; width: 90%; max-width: 600px;" role="alert">      <span class="material-symbols-outlined me-2">        upcoming      </span>      <div>{{ alerta.mensaje }}</div>    </div>    }  </div>  @if (vistaActual() === \'inventario\') {  <div class="registro-contenedor">    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-3">      <h4 class="mb-0 text-secondary">Gestión de Inventario</h4>      <button class="btn-enviar d-flex align-items-center gap-1 btn-sm" (click)="alertaProximamente()">        <span class="material-symbols-outlined fs-6">add</span> Añadir Juego      </button>    </div>    <div class="table-responsive">      <table class="table table-hover align-middle tabla-admin">        <thead>          <tr>            <th>ID</th>            <th>Nombre del Juego</th>            <th>Categoría</th>            <th>Precio</th>            <th>Stock</th>            <th class="text-center">Acciones</th>          </tr>        </thead>        <tbody>          @for (juego of juegoService.juegos(); track juego.id) {          <tr>            <td>#{{ juego.id }}</td>            <td class="fw-bold">{{ juego.nombre }}</td>            <td>{{ juego.categoria }}</td>            <td>{{ juego.precio | currency: \'CLP\': \'symbol\': \'1.0-0\' }}</td>            <td><span class="badge" [ngClass]="juego.stock < 5 ? \'bg-danger\' : \'bg-success\'">{{ juego.stock }}</span>            </td>            <td class="text-center">              <button class="btn btn-sm btn-outline-danger" (click)="eliminarJuego(juego.id)" title="Eliminar Item">                <span class="material-symbols-outlined fs-6">delete</span>              </button>            </td>          </tr>          } @empty {          <tr>            <td colspan="6" class="text-center">No hay juegos registrados.</td>          </tr>          }        </tbody>      </table>    </div>  </div>  }  @if (vistaActual() === \'usuarios\') {  <div class="registro-contenedor">    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-3">      <h4 class="mb-0 text-secondary">Gestión de Usuarios</h4>    </div>    <div class="table-responsive">      <table class="table table-hover align-middle tabla-usuarios">        <thead>          <tr>            <th>Nombre</th>            <th>Usuario</th>            <th>Email</th>            <th class="text-center">Rol</th>          </tr>        </thead>        <tbody>          @for (u of usuarios(); track u.username) {          <tr>            <td>{{ u.nombre }}</td>            <td>{{ u.username }}</td>            <td>{{ u.email }}</td>            <td class="text-center">              @if (esAdminMaestro()) {              <button class="btn btn-sm text-white" [ngClass]="u.rol === \'admin\' ? \'bg-danger\' : \'bg-success\'"                (click)="toggleRol(u.username)" [disabled]="u.email === \'admin@sev.cl\'">                {{ u.rol === \'admin\' ? \'Admin\' : \'Cliente\' }}              </button>              } @else {              <span class="badge" [ngClass]="u.rol === \'admin\' ? \'bg-danger\' : \'bg-success\'">                {{ u.rol === \'admin\' ? \'Admin\' : \'Cliente\' }}              </span>              }            </td>          </tr>          } @empty {          <tr>            <td colspan="4" class="text-center">No hay usuarios registrados.</td>          </tr>          }        </tbody>      </table>    </div>  </div>  }</main></div>'
+    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CarroComponent', 'selector': 'app-carro'},{'name': 'CatalogoComponent', 'selector': 'app-catalogo'},{'name': 'DetalleComponent', 'selector': 'app-detalle'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'PerfilComponent', 'selector': 'app-perfil'},{'name': 'RecuperarComponent', 'selector': 'app-recuperar'},{'name': 'RegistroComponent', 'selector': 'app-registro'},{'name': 'TemplatePlaygroundComponent', 'selector': 'template-playground-root'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'AdminComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'AdminComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

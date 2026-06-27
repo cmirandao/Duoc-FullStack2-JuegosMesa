@@ -14,21 +14,27 @@ export class RegistroComponent {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private authService = inject(AuthService);
-  // Para mostrar mensajes de error y manejar el estado de la alerta en vez de usar alert
+  /**
+   * @description Señal para mostrar mensajes de estado en el registro.
+   */
   alertaGlobal = signal<{ tipo: 'success' | 'danger', mensaje: string } | null>(null);
-  /* 
-   * Inicializacion del formulario y sus validaciones 
-  */
+  /**
+   * @description Formulario reactivo con validaciones de registro.
+   */
   registroForm: FormGroup = this.fb.group({
     nombre: ['', Validators.required],
     usuario: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,20}$/)]],
+    email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
+    password: ['', [Validators.required, Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,18}$/)]],
     confirmPassword: ['', Validators.required],
     fechaNacimiento: ['', [Validators.required, this.validarEdad(13)]],
     direccion: ['']
   }, { validators: this.passwordCoincide });
 
+  /**
+   * @description Procesa el registro del usuario y redirige a login cuando se completa.
+   * @returns void
+   */
   onSubmit() {
     if (this.registroForm.invalid) return;
     const formValues = this.registroForm.value;
@@ -48,17 +54,20 @@ export class RegistroComponent {
       this.alertaGlobal.set({ tipo: 'danger', mensaje: "Error: Este correo electrónico ya se encuentra registrado." });
     }
   }
-  /*
-  * Limpiar todos los campos 
-  */
+  /**
+   * @description Restablece el formulario de registro y oculta la alerta.
+   * @returns void
+   */
   onReset() {
     this.registroForm.reset();
     this.alertaGlobal.set(null);
   }
 
-  /*
-  * Validador edad minima
-  */
+  /**
+   * @description Valida que la edad ingresada cumpla la edad mínima.
+   * @param minEdad Edad mínima requerida.
+   * @returns null si es válido, { menorEdad: true } si es menor.
+   */
   validarEdad(minEdad: number) {
     return (control: AbstractControl): ValidationErrors | null => {
       // Si no hay valor, se activa Validators.required
@@ -80,9 +89,11 @@ export class RegistroComponent {
     };
   }
 
-  /*
-  * Valida coincidencia de passwords
-  */
+  /**
+   * @description Verifica que las contraseñas ingresadas coincidan.
+   * @param group Grupo de formulario con los controles password y confirmPassword.
+   * @returns null si coinciden, { noCoincide: true } si no coinciden.
+   */
   passwordCoincide(group: AbstractControl) {
     return group.get('password')?.value === group.get('confirmPassword')?.value ? null : { noCoincide: true };
   }

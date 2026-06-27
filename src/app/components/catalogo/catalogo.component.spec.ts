@@ -12,14 +12,18 @@ describe('CatalogoComponent', () => {
   let component: CatalogoComponent;
   let fixture: ComponentFixture<CatalogoComponent>;
 
-  // Datos de prueba
+  /**
+   * @description Datos de prueba para el catálogo con distintos estados de stock y categorías.
+   */
   const juegosMock: Partial<Juego>[] = [
     { id: 1, nombre: 'Juego Estrategia 1', categoria: 'Estrategia', stock: 5 },
     { id: 2, nombre: 'Juego Estrategia 2', categoria: 'Estrategia', stock: 0 },
     { id: 3, nombre: 'Juego Familiar 1', categoria: 'Familiar', stock: 10 }
   ];
 
-  // Mocks de los Servicios
+  /**
+   * @description Mocks de los servicios inyectados en CatalogoComponent para aislar la prueba.
+   */
   const mockJuegoService = {
     juegos: signal(juegosMock),
     reducirStock: vi.fn()

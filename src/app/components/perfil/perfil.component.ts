@@ -16,7 +16,9 @@ export class PerfilComponent {
   perfilForm!: FormGroup;
   mensajeExito = signal(false);
 
-  // Guardamos el historial agrupado en una signal
+  /**
+   * @description Historial de compras agrupado por nombre de juego.
+   */
   historialAgrupado = signal<{ nombre: string, cantidad: number }[]>([]);
 
   ngOnInit() {
@@ -25,9 +27,7 @@ export class PerfilComponent {
 
     const esAdminMaestro = usuario.email === 'admin@sev.cl';
 
-    /*
-    * Inicializacion del formulario con los datos del usuario
-    */
+    // Inicializacion del formulario con los datos del usuario
     this.perfilForm = this.fb.group({
       nombre: [{ value: usuario.nombre || '', disabled: esAdminMaestro }, Validators.required],
       usuario: [{ value: usuario.username || '', disabled: true }],
@@ -36,7 +36,7 @@ export class PerfilComponent {
       fechaNacimiento: [{ value: usuario.fechaNacimiento || '', disabled: false }, [Validators.required, this.validarEdad(13)]],
       direccion: [{ value: usuario.direccion || '', disabled: false }],
 
-      password: [{ value: '', disabled: false }, [Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,20}$/)]],
+      password: [{ value: '', disabled: false }, [Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,18}$/)]],
       confirmPassword: [{ value: '', disabled: false }]
     }, { validators: this.passwordCoincide });
 
@@ -46,6 +46,11 @@ export class PerfilComponent {
     }
   }
 
+  /**
+   * @description Carga el historial de compras y agrupa por nombre de juego.
+   * @param username Nombre de usuario para filtrar el historial.
+   * @returns void
+   */
   cargarHistorial(username: string) {
     const historialCompleto = JSON.parse(localStorage.getItem('historialCompras') || '[]');
     const misCompras = historialCompleto.filter((h: any) => h.username === username);
@@ -59,10 +64,15 @@ export class PerfilComponent {
     this.historialAgrupado.set(Object.values(agrupado));
   }
 
+  /**
+   * @description Actualiza los datos del perfil del usuario actual.
+   * @returns void
+   */
   onSubmit() {
     if (this.perfilForm.invalid) return;
 
     const usuario = this.authService.usuarioActual();
+    if (!usuario) return;
 
     // getRawValue() extrae también los datos de los campos 'disabled' para no perderlos
     const formValues = this.perfilForm.getRawValue();
@@ -95,9 +105,11 @@ export class PerfilComponent {
     setTimeout(() => this.mensajeExito.set(false), 4000);
   }
 
-  /*
-  *  Validadores Personalizados
-  */
+  /**
+   * @description Valida que el usuario tenga la edad mínima requerida.
+   * @param minEdad Edad mínima permitida.
+   * @returns null si es válido, { menorEdad: true } si es menor.
+   */
   validarEdad(minEdad: number) {
     return (control: AbstractControl): ValidationErrors | null => {
       if (!control.value) return null;
@@ -111,6 +123,11 @@ export class PerfilComponent {
     };
   }
 
+  /**
+   * @description Comprueba si la contraseña y su confirmación coinciden.
+   * @param group Grupo de formulario con password y confirmPassword.
+   * @returns null si coinciden, { noCoincide: true } si no.
+   */
   passwordCoincide(group: AbstractControl) {
     const pass = group.get('password')?.value;
     const confirm = group.get('confirmPassword')?.value;

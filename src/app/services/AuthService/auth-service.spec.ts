@@ -3,6 +3,9 @@ import { TestBed } from '@angular/core/testing';
 import { AuthService } from './auth-service';
 
 describe('AuthService', () => {
+  /**
+   * @description Instancia del servicio AuthService creada por TestBed.
+   */
   let service: AuthService;
 
   beforeEach(() => {

@@ -9,11 +9,16 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
 
-  // Mocks
+  /**
+   * @description Mock del Router que intercepta las navegaciones realizadas por LoginComponent.
+   */
   const mockRouter = {
     navigate: vi.fn()
   };
 
+  /**
+   * @description Mock del AuthService con los métodos necesarios para las pruebas de login.
+   */
   const mockAuthService = {
     obtenerUsuarios: vi.fn(),
     login: vi.fn()

@@ -9,7 +9,9 @@ describe('RecuperarComponent', () => {
   let component: RecuperarComponent;
   let fixture: ComponentFixture<RecuperarComponent>;
 
-  // Mock de Servicio
+  /**
+   * @description Mock de AuthService utilizado para simular la consulta de usuarios.
+   */
   const mockAuthService = {
     obtenerUsuarios: vi.fn()
   };
@@ -17,14 +19,18 @@ describe('RecuperarComponent', () => {
   beforeEach(async () => {
     vi.clearAllMocks();
 
-    // Vitest que toma el control del tiempo antes de montar el componente
+    /**
+     * @description Configura Vitest para controlar el tiempo de los temporizadores.
+     */
     vi.useFakeTimers();
 
     await TestBed.configureTestingModule({
       imports: [RecuperarComponent, ReactiveFormsModule],
       providers: [
         { provide: AuthService, useValue: mockAuthService },
-        // Previene el error NG0201 inyectando una ruta falsa para los RouterLinks del HTML
+        /**
+         * @description Mock de ActivatedRoute para evitar errores en los RouterLinks sin cargar rutas reales.
+         */
         { provide: ActivatedRoute, useValue: {} }
       ]
     }).compileComponents();

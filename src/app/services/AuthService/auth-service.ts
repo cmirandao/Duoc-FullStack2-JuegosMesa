@@ -6,23 +6,28 @@ export class AuthService {
   private platformId = inject(PLATFORM_ID);
   private _usuario = signal<any>(this.obtenerSesionGuardada());
   usuarioActual = this._usuario.asReadonly();
-  /*
-  * Verificacion de permisos del usuario 
-  */
+  /**
+   * @description Indica si hay un usuario actualmente autenticado.
+   */
   estaLogueado = computed(() => this._usuario() !== null);
+  /**
+   * @description Indica si el usuario autenticado tiene rol de administrador.
+   */
   esAdmin = computed(() => this._usuario()?.rol === 'admin')
-  /*
-  * Recupera la sesion al refrescar el navegador
-  */
+  /**
+   * @description Recupera la sesión activa guardada en localStorage.
+   * @returns Objeto de usuario o null si no existe sesión.
+   */
   private obtenerSesionGuardada() {
     if (!isPlatformBrowser(this.platformId)) return null;
     const sesion = localStorage.getItem('usuarioSesion');
     return sesion ? JSON.parse(sesion) : null;
   }
 
-  /*
-  * Garantiza que el Admin Maestro exista
-  */
+  /**
+   * @description Obtiene la lista de usuarios registrados y garantiza la existencia del administrador.
+   * @returns Array de usuarios registrados.
+   */
   obtenerUsuarios(): any[] {
     if (!isPlatformBrowser(this.platformId)) return [];
 
@@ -46,9 +51,11 @@ export class AuthService {
     return usuarios;
   }
 
-  /*
-  * Registrar un nuevo usuario
-  */
+  /**
+   * @description Registra un nuevo usuario si el correo no está en uso.
+   * @param nuevoUsuario Datos del usuario a registrar.
+   * @returns true si se registró, false si el correo ya existe.
+   */
   registrarUsuario(nuevoUsuario: any): boolean {
     if (!isPlatformBrowser(this.platformId)) return false;
 
@@ -64,18 +71,21 @@ export class AuthService {
     localStorage.setItem('usuariosRegistrados', JSON.stringify(usuarios));
     return true;
   }
-  /*
-  * Inicia sesion actualizando signals y localStorage 
-  */
+  /**
+   * @description Inicia sesión guardando el usuario en localStorage y actualizando la señal global.
+   * @param user Usuario que inicia sesión.
+   * @returns void
+   */
   login(user: any) {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('usuarioSesion', JSON.stringify(user));
     }
     this._usuario.set(user);
   }
-  /*
-  * Destruye la sesion de forma segura 
-  */
+  /**
+   * @description Cierra la sesión actual y elimina los datos del usuario del navegador.
+   * @returns void
+   */
   logout() {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('usuarioSesion');

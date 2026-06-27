@@ -92,7 +92,7 @@
                             <input type="password" formControlName="password" class="form-control"
                                 [class.is-invalid]="perfilForm.get('password')?.invalid && perfilForm.get('password')?.touched">
                             @if (perfilForm.get('password')?.errors?.['pattern']) {
-                            <div class="invalid-feedback d-block">Debe tener entre 8-20 caracteres, 1 mayúscula, 1
+                            <div class="invalid-feedback d-block">Debe tener entre 6-18 caracteres, 1 mayúscula, 1
                                 número y 1 símbolo.</div>
                             }
                         </div>

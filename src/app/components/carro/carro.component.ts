@@ -12,14 +12,15 @@ import { CarritoService } from '../../services/CarritoService/carrito-service';
 export class CarroComponent {
   carritoService = inject(CarritoService);
   router = inject(Router);
-  /*
-  * Para mostrar mensajes de error y manejar el estado de la alerta en vez de usar alert
-  */
+  /**
+   * @description Mensaje de estado para el proceso de pago.
+   */
   alertaPago = signal<{ tipo: 'success' | 'warning' | 'danger', mensaje: string } | null>(null);
 
-  /*
-  *Delega la logica de la transaccion al servicio y redirecciona
-  */
+  /**
+   * @description Realiza el pago mediante el servicio de carrito, registra la compra y redirige al inicio.
+   * @returns void
+   */
   pagar() {
     const resultado = this.carritoService.procesarPago();
     if (resultado.exito) {

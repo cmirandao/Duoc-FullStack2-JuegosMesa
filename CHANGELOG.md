@@ -4,6 +4,19 @@ Todas las notas de los cambios notables de este proyecto serán documentadas en 
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto se adhiere al [Versionado Semántico](https://semver.org/lang/es/).
 
+## [1.2.0] - 2026-07-01
+
+### Añadido (Added)
+- **Cliente HTTP:** Configuración global de `provideHttpClient()` en `app.config.ts` para habilitar peticiones de red en toda la aplicación bajo la arquitectura Standalone.
+- **API REST Simulada:** Creación de un repositorio en GitHub Pages para servir el archivo `juegos.json`, simulando un entorno Backend en la nube.
+
+### Cambiado (Changed)
+- **Consumo Asíncrono:** Refactorización profunda de `JuegoService`. La carga inicial del catálogo ahora se realiza mediante una petición HTTP `GET` consumiendo el JSON externo y suscribiéndose al Observable, reemplazando el flujo síncrono.
+- **Persistencia de Datos:** El sistema ahora actúa de forma híbrida: descarga el catálogo desde la API externa si el `localStorage` está vacío, pero mantiene las operaciones CRUD de stock de forma local para no perder la fluidez de la interfaz.
+
+### Eliminado (Removed)
+- Eliminada la función estática `obtenerJuegosIniciales()` y toda la data en duro (hardcoded) del código fuente, delegando la responsabilidad de los datos al JSON externo.
+
 ## [1.1.1] - 2026-06-26
 
 ### Añadido (Added)

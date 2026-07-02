@@ -102,6 +102,21 @@
 <p>Todas las notas de los cambios notables de este proyecto serán documentadas en este archivo.
 El formato está basado en <a href="https://keepachangelog.com/es-ES/1.0.0/">Keep a Changelog</a>,
 y este proyecto se adhiere al <a href="https://semver.org/lang/es/">Versionado Semántico</a>.</p>
+<h2>[1.2.0] - 2026-07-01</h2>
+<h3>Añadido (Added)</h3>
+<ul>
+<li><strong>Cliente HTTP:</strong> Configuración global de <code>provideHttpClient()</code> en <code>app.config.ts</code> para habilitar peticiones de red en toda la aplicación bajo la arquitectura Standalone.</li>
+<li><strong>API REST Simulada:</strong> Creación de un repositorio en GitHub Pages para servir el archivo <code>juegos.json</code>, simulando un entorno Backend en la nube.</li>
+</ul>
+<h3>Cambiado (Changed)</h3>
+<ul>
+<li><strong>Consumo Asíncrono:</strong> Refactorización profunda de <code>JuegoService</code>. La carga inicial del catálogo ahora se realiza mediante una petición HTTP <code>GET</code> consumiendo el JSON externo y suscribiéndose al Observable, reemplazando el flujo síncrono.</li>
+<li><strong>Persistencia de Datos:</strong> El sistema ahora actúa de forma híbrida: descarga el catálogo desde la API externa si el <code>localStorage</code> está vacío, pero mantiene las operaciones CRUD de stock de forma local para no perder la fluidez de la interfaz.</li>
+</ul>
+<h3>Eliminado (Removed)</h3>
+<ul>
+<li>Eliminada la función estática <code>obtenerJuegosIniciales()</code> y toda la data en duro (hardcoded) del código fuente, delegando la responsabilidad de los datos al JSON externo.</li>
+</ul>
 <h2>[1.1.1] - 2026-06-26</h2>
 <h3>Añadido (Added)</h3>
 <ul>

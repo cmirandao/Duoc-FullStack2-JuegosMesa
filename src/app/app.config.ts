@@ -5,6 +5,7 @@ import { registerLocaleData } from '@angular/common';
 import localeEsCl from '@angular/common/locales/es-CL';
 
 import { routes } from './app.routes';
+import { provideHttpClient } from '@angular/common/http';
 import { provideClientHydration } from '@angular/platform-browser';
 
 registerLocaleData(localeEsCl);
@@ -22,6 +23,7 @@ export const appConfig: ApplicationConfig = {
       })
     ),
     { provide: LOCALE_ID, useValue: 'es-CL' }, 
-    provideClientHydration()
+    provideClientHydration(),
+    provideHttpClient()
   ]
 };
